@@ -8,7 +8,7 @@
 
 <p></p>
 
-<canvas id="myCanvas" width="500" height="700" style="border:1px solid #d3d3d3;">
+<canvas id="myCanvas" width="1489" height="1000" style="border:1px solid #d3d3d3;">
 Your browser does not support the HTML5 canvas tag.</canvas>
 
 <script>
@@ -17,11 +17,13 @@ Your browser does not support the HTML5 canvas tag.</canvas>
 var name = "DAO ANH NGUYEN";
 var accNumber = "0912345678";
 var qr = "00020101021138540010A00000072701240006970432011009323886850208QRIBFTTA53037045802VN6304A349";
+var standee = "standee1.png";
 
 const urlParams = new URLSearchParams(window.location.search);
 const myParamName = urlParams.get('name');
 const myParamAccNumber = urlParams.get('acc');
 const myParamQr = urlParams.get('qr');
+const myParamStandee = urlParams.get('standee');
 
 if(myParamName)
 	name = myParamName;
@@ -31,8 +33,11 @@ if(myParamAccNumber)
 	
 if(myParamQr)
 	qr = myParamQr;
+	
+if(myParamStandee)
+	standee = "standee" + myParamStandee + ".png";
 
-var linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=500x500&choe=UTF-8&chld=L|0";
+var linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=300x300&choe=UTF-8&chld=L|0";
 
 var c=document.getElementById("myCanvas");
 
@@ -48,6 +53,9 @@ function start(url) {
 (async() => {
   console.log('before start');
   console.log('linkqr' + linkqr);
+  
+  let img_standee = await start("./" + standee);
+  
   let img = await start(linkqr);
   
   
@@ -59,20 +67,22 @@ function start(url) {
 	ctx.fillStyle = "white";
 	ctx.fillRect(0, 0, c.width, c.height);
 
-    ctx.drawImage(img, 0, 0);
+    ctx.drawImage(img_standee, 0, 0);
 	
-	ctx.drawImage(logo_vietqr, 100, 520);
+	ctx.drawImage(img, 1050, 300);
 	
-	ctx.drawImage(logo_napas247, 330, 520);
+	ctx.drawImage(logo_vietqr, 1050, 640);
+	
+	ctx.drawImage(logo_napas247, 1240, 640);
 	
 	ctx.fillStyle = "black";
 	
 	ctx.textAlign = "center";
-	ctx.font="30px Arial";
-	ctx.fillText(name,250,620);
+	ctx.font="25px Arial";
+	ctx.fillText(name, 1200, 770);
 
 	ctx.font="20px Arial";
-	ctx.fillText(accNumber,250,670);
+	ctx.fillText(accNumber, 1200, 810);
 	
 
 	// save img
