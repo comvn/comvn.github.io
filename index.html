@@ -42,7 +42,7 @@ var linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=300x3
 var c=document.getElementById("myCanvas");
 
 async function crimg(url) {
-  return new Promise(r => { let i = new Image(); i.crossOrigin="anonymous"; i.onload = (() => r(i)); i.src = url; });
+  return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
 }
 
 function load(url) {
@@ -94,12 +94,10 @@ async function loadImage(url) {
 }
 
 function download(){
-	console.log('download start');
-    //document.getElementById("downloader").download = name.replaceAll(" ","_"); + "_qr_standee.png";
-    document.getElementById("downloader").download = "_qr_standee.png";
+    document.getElementById("downloader").download = name.replaceAll(" ","_"); + "_qr_standee.png";
     document.getElementById("downloader").href = document.getElementById("myCanvas").toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-	console.log('download end');
 }
+
 
 </script>
 
