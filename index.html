@@ -5,7 +5,6 @@
 <body>
 
 <a href="#" id="downloader" onclick="javascript:download();" download="image.png">Tải ảnh QR!</a>
-<a id="download" download="image.png"><button type="button" onClick="download()">Download</button></a>
 <p></p>
 
 <canvas id="myCanvas" width="1489" height="1000" style="border:1px solid #d3d3d3;">
@@ -100,11 +99,16 @@ function download1(){
 }
 
 function download(){
-	var download = document.getElementById("download");
+	console.log('download start');
+	var downloader = document.getElementById("downloader");
+	downloader.download = name.replaceAll(" ","_"); + "_qr_standee.png";
+	
 	var image = document.getElementById("myCanvas").toDataURL("image/png")
 				.replace("image/png", "image/octet-stream");
-	download.setAttribute("href", image);
-
+				
+	downloader.setAttribute("href", image);
+	
+	console.log('download end');
 }
 
 
