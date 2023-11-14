@@ -1,22 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <script>
-	if (window.location.host.indexOf('nguyenda.com') > -1 && window.location.protocol != "https:"){
-		window.location.protocol = "https";
-	}
-  </script>
-  <title>Demo QR gen by google</title>
-</head>
+<!doctype html>
+<html>
+<meta charset="utf-8" />
 
 <body>
-  <h1>
-    Test QR
-  </h1>
-  <p>
-	<img src="https://chart.googleapis.com/chart?cht=qr&chl=00020101021138540010A00000072701240006970432011009323886850208QRIBFTTA53037045802VN6304A349&chs=500x500&choe=UTF-8&chld=L|2" alt="qr code"></a>
-  </p>
+
+<a href="#" id="downloader" onclick="javascript:download();" download="image.png">Tải ảnh QR!</a>
+
+<a id="download" download="image.png"><button type="button" onClick="download()">Tải ảnh QR!</button></a>
+<p></p>
+
+<canvas id="myCanvas" width="500" height="700" style="border:1px solid #d3d3d3;">
+Your browser does not support the HTML5 canvas tag.</canvas>
+
+<script>
+
+//default
+var name = "DAO ANH NGUYEN";
+var accNumber = "0912345678";
+var qr = "00020101021138540010A00000072701240006970432011009323886850208QRIBFTTA53037045802VN6304A349";
+
+const urlParams = new URLSearchParams(window.location.search);
+const myParamName = urlParams.get('name');
+const myParamAccNumber = urlParams.get('acc');
+const myParamQr = urlParams.get('acc');
+
+if(myParamName)
+	name = myParamName;
+	
+if(myParamAccNumber)
+	accNumber = myParamAccNumber;
+	
+if(myParamQr)
+	qr = myParamQr;
+
+var c=document.getElementById("myCanvas");
+
+async function myfunction(url) {
+  return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
+}
+
+function start(url) {
+  return myfunction(url);
+}
+
+// Call start
+(async() => {
+  console.log('before start');
+
+  
+  let img = await start("https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=500x500&choe=UTF-8&chld=L|0");
+  
+  
+  let logo_vietqr = await start("./logos-vietqr.png");
+  let logo_napas247 = await start("./napas247s.png");
+  
+	var ctx = c.getContext('2d');
+
+	ctx.fillStyle = "white";
+	ctx.fillRect(0, 0, c.width, c.height);
+
+    ctx.drawImage(img, 0, 0);
+	
+	ctx.drawImage(logo_vietqr, 100, 520);
+	
+	ctx.drawImage(logo_napas247, 330, 520);
+	
+	ctx.fillStyle = "black";
+	
+	ctx.textAlign = "center";
+	ctx.font="30px Arial";
+	ctx.fillText(name,250,620);
+
+	ctx.font="20px Arial";
+	ctx.fillText(accNumber,250,670);
+	
+
+	// save img
+	//Canvas2Image.saveAsImage(c, 500, 500, 'png');
+  
+  console.log('after start');
+})();
+
+
+async function loadImage(url) {
+  return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
+}
+
+function download1(){
+    document.getElementById("downloader").download = "image_qr_customize_name.png";
+    document.getElementById("downloader").href = document.getElementById("myCanvas").toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+}
+
+function download(){
+        var canvas = document.getElementById("myCanvas");
+		var dataURL = canvas.toDataURL("image/png");
+		var newTab = window.open('about:blank','image from canvas');
+		newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
+
+    }
+
+</script>
+
 </body>
+</html>
