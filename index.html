@@ -4,7 +4,7 @@
 
 <body>
 
-<a href="#" id="downloader" onclick="download();" download="image.png">Tải ảnh QR!</a>
+<a style='display:none;' href="#" id="downloader" onclick="download();" download="image.png">Tải ảnh QR!</a>
 <a id="download" download="image.png"><button type="button" onClick="download()">Tải ảnh QR!</button></a>
 <p></p>
 
@@ -102,7 +102,7 @@ function download1(){
 function download(){
 	console.log('download start');
 	var downloader = document.getElementById("downloader");
-	downloader.download = name.replaceAll(" ","_"); + "_qr_standee.png";
+	downloader.download = name.replaceAll(" ","_") + "_qr_standee.png";
 	
 	var image = document.getElementById("myCanvas").toDataURL("image/png")
 				.replace("image/png", "image/octet-stream");
@@ -116,7 +116,7 @@ function download(){
 function download(){
 	console.log('download start');
 	var downloader = document.getElementById("download");
-	downloader.download = name.replaceAll(" ","_"); + "_qr_standee.png";
+	downloader.download = name.replaceAll(" ","_") + "_qr_standee.png";
 	
 	var image = document.getElementById("myCanvas").toDataURL("image/png")
 				.replace("image/png", "image/octet-stream");
