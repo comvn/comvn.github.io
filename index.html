@@ -4,7 +4,7 @@
 
 <body>
 
-<a href="#" id="downloader" onclick="download1();" download="image.png">Tải ảnh QR!</a>
+<a href="#" id="downloader" onclick="download();" download="image.png">Tải ảnh QR!</a>
 
 <p></p>
 
@@ -86,18 +86,11 @@ async function loadImage(url) {
   return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
 }
 
-function download1(){
+function download(){
     document.getElementById("downloader").download = "image_qr_customize_name.png";
     document.getElementById("downloader").href = document.getElementById("myCanvas").toDataURL("image/png").replace(/^data:image\/[^;]/, 'data:application/octet-stream');
 }
 
-function download(){
-        var canvas = document.getElementById("myCanvas");
-		var dataURL = canvas.toDataURL("image/png");
-		var newTab = window.open('about:blank','image from canvas');
-		newTab.document.write("<img src='" + dataURL + "' alt='from canvas'/>");
-
-    }
 
 </script>
 
