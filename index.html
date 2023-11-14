@@ -42,7 +42,7 @@ var linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=300x3
 var c=document.getElementById("myCanvas");
 
 async function myfunction(url) {
-  return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
+  return new Promise(r => { let i = new Image();img.crossOrigin="anonymous"; i.onload = (() => r(i)); i.src = url; });
 }
 
 function start(url) {
