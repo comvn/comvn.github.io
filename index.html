@@ -3,9 +3,9 @@
 <meta charset="utf-8" />
 
 <body>
-653
+
 <a style='display:none;' href="#" id="downloader" onclick="download1();" download="image.png">Tải ảnh QR!</a>
-<a id="download" download="image.png"><button type="button" onClick="download()">Tải ảnh QR!</button></a>
+<a id="download" download="image.png"><button id="btndownload" type="button" onClick="download()">Tải ảnh QR!</button></a>
 <p></p>
 
 <canvas id="myCanvas" width="1489" height="1000" style="border:1px solid #d3d3d3;">
@@ -89,11 +89,14 @@ function load(url) {
 	ctx.font="20px Arial";
 	ctx.fillText(accNumber, 1200, 810);
 
-  
+    console.log(dl);
 	if(dl)
 	{
-		download();
-		window.close();
+		//download();
+		var btn = document.getElementById("btndownload");
+		//console.log(btn);
+		btn.click();
+		//window.close();
 	}
   
     console.log('after load');
