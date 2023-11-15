@@ -2,7 +2,7 @@
 <html>
 <meta charset="utf-8" />
 <head>
-	<title>QR Standee Generate v3.11.15.14.09</title>
+	<title>QR Standee Generate v3.11.15.14.12</title>
 </head>
 <body>
 
@@ -50,7 +50,7 @@ if(myParamStandeeDl)
 if(myParamIndex)
 	index = myParamIndex;
 	
-file_name = ((index == 0) ? '' : index) + name.replaceAll(" ","_") + "_qr_standee.png";
+file_name = ((index == 0) ? '' : index + "_") + name.replaceAll(" ","_") + "_qr_standee.png";
 
 let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=300x300&choe=UTF-8&chld=L|0";
 
