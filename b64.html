@@ -1,0 +1,201 @@
+<!doctype html>
+<html>
+<meta charset="utf-8" />
+<head>
+	<title>ShopQR Standee Generate v3.11.23.14.12</title>
+</head>
+<style>
+	table {
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	th, td {
+	  padding: 8px;
+	  text-align: left;
+	  border: 1px solid #DDD;
+	}
+
+	tr:hover {background-color: #eee;}
+</style>
+<body>
+
+<h1>
+	
+</h1>
+
+<p id="note"></p>
+<button id="btndownload" type="button" onClick="return startGenerateImg()">Tạo ảnh</button>
+<div id="container">
+	
+</div>
+<div style='width:100;height:100;display:none;'>
+	<canvas id="myCanvas" width="1772" height="1182" style="border:1px solid #d3d3d3;">
+	Your browser does not support the HTML5 canvas tag.</canvas>
+<div>
+<script>
+
+var customers;
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext('2d');
+var host = "https://www.nguyenda.com/";
+
+const base64 = {
+	decode: s => decodeURIComponent(escape(window.atob( s ))),
+	encode: b => window.btoa(unescape(encodeURIComponent( b )))
+};
+
+window.onload = function()
+{
+    var b64 = "";
+
+	const urlParams = new URLSearchParams(window.location.search);
+	const param = urlParams.get('p');
+	if(!param)
+	{
+		document.getElementById('note').innerText = 'Không có dữ liệu';
+		return;
+	}
+	//var decode = decodeURIComponent(window.atob(param));
+	var decode = base64.decode(param);
+	console.log(decode);
+
+	customers = JSON.parse(decode);
+	console.log(customers);
+
+	console.log(customers.length);
+
+	crCustTableData(customers);
+};
+
+</script>
+
+<script>
+
+function crCustTempTable()
+{
+	const newTable = document.createElement("table");
+	newTable.id = 'tblCust';
+	
+	var thead = '';
+	
+	thead = '<thead>';
+	thead += '<th>Thứ tự</th>';
+	thead += '<th>Tên tài khoản</th>';
+	thead += '<th>Số tài khoản</th>';
+	thead += '<th>Tải file</th>';
+	thead += '</thead>';
+
+	console.log(thead);
+	
+	newTable.innerHTML = thead;
+
+	const target = document.getElementById('container');
+	target.appendChild(newTable);
+}
+
+function crCustTableData(customers)
+{
+	if(!customers)
+	{
+		document.getElementById('note').innerText = 'Không có dữ liệu';
+		return;
+	}
+	document.getElementById('note').innerText = 'Có ' + customers.length + ' khách hàng';
+	
+	//create table template
+	var tbl = document.getElementById('tblCust');
+	if(!tbl)
+	{
+		crCustTempTable();
+		tbl = document.getElementById('tblCust');
+	}
+	
+	for(cust of customers){
+		const tr = document.createElement("tr");
+		tr.id = 'tr_' + cust.idx;
+		const td1 = document.createElement("td");
+		const td2 = document.createElement("td");
+		const td3 = document.createElement("td");
+		const td4 = document.createElement("td");
+		td4.id = 'link_' + cust.idx;
+		
+		td1.textContent = cust.idx;
+		td2.textContent = cust.name;
+		td3.textContent = cust.acc;
+		
+		tr.appendChild(td1);
+		tr.appendChild(td2);
+		tr.appendChild(td3);
+		tr.appendChild(td4);
+		
+		tbl.appendChild(tr);
+	}
+}
+
+async function crimg(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let myPromise = new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
+  
+  return await myPromise;
+}
+
+function load(url) {
+  return crimg(url);
+}
+
+function genLinks(custs)
+{
+	for(cust of custs){
+		genLink(cust);
+	}
+}
+
+function genLink(customer)
+{
+	var file_name = customer.idx + "_" + customer.name.replaceAll(" ","_") + "_qr_standee.png";
+	console.log(file_name);
+	let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + customer.qr + "&chs=300x300&choe=UTF-8&chld=L|0";
+	var standee_file_name = "Standee02.png";
+	
+	//var img_qr;
+	
+	(async() => {
+		//create image qr standee
+		let img_standee_template = await load(host + "/" + standee_file_name);
+		console.log(img_standee_template);
+		let img_qr = await load(linkqr);
+		console.log(img_qr);
+		
+		ctx.drawImage(img_standee_template, 0, 0);
+		
+		ctx.drawImage(img_qr, 1225, 485);
+		
+		//create link
+		let tdLink = document.getElementById('link_' + customer.idx);
+
+		const link = document.createElement("a");
+		link.textContent = 'Tải ảnh QR';
+		link.download = file_name;
+
+		let image = document.getElementById("myCanvas").toDataURL("image/png")
+					.replace("image/png", "image/octet-stream");
+
+		link.setAttribute("href", image);
+		
+		console.log('download end');
+		
+		tdLink.appendChild(link);
+	})();
+}
+
+function startGenerateImg()
+{
+	genLinks(customers);
+	return false;
+}
+
+</script>
+
+</body>
+</html>
