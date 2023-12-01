@@ -2,138 +2,23 @@
 <html>
 <meta charset="utf-8" />
 <head>
-	<title>QR Standee Generate v3.11.15.14.12</title>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>nguyenda.com</title>
 </head>
 <body>
+<h1>
+404
+</h1>
 
-
-<a id="download" download="image.png"><button id="btndownload" type="button" onClick="download()">Tải ảnh QR!</button></a>
-<p></p>
-
-<canvas id="myCanvas" width="1489" height="1000" style="border:1px solid #d3d3d3;">
-Your browser does not support the HTML5 canvas tag.</canvas>
-
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VEP0CTE9MS"></script>
 <script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-//default
-let name = "DAO ANH NGUYEN";
-let accNumber = "0912345678";
-let qr = "00020101021138540010A00000072701240006970432011009323886850208QRIBFTTA53037045802VN6304A349";
-let standee = "standee1.png";
-let dl = false;
-let index = 0;
-let file_name;
-
-const urlParams = new URLSearchParams(window.location.search);
-const myParamName = urlParams.get('name');
-const myParamAccNumber = urlParams.get('acc');
-const myParamQr = urlParams.get('qr');
-const myParamStandee = urlParams.get('standee');
-const myParamStandeeDl = urlParams.get('dl');
-const myParamIndex = urlParams.get('idx');
-
-if(myParamName)
-	name = myParamName;
-	
-if(myParamAccNumber)
-	accNumber = myParamAccNumber;
-	
-if(myParamQr)
-	qr = myParamQr;
-	
-if(myParamStandee)
-	standee = "standee" + myParamStandee + ".png";
-	
-if(myParamStandeeDl)
-	dl = myParamStandeeDl == "1";
-
-if(myParamIndex)
-	index = myParamIndex;
-	
-file_name = ((index == 0) ? '' : index + "_") + name.replaceAll(" ","_") + "_qr_standee.png";
-
-let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + qr + "&chs=300x300&choe=UTF-8&chld=L|0";
-
-var c=document.getElementById("myCanvas");
-
-async function crimg(url) {
-  return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
-}
-
-function load(url) {
-  return crimg(url);
-}
-
-// Call load
-(async() => {
-	console.log('before load');
-	console.log('linkqr' + linkqr);
-
-	let img_standee = await load("./" + standee);
-
-	let img = await load(linkqr);
-
-
-	let logo_vietqr = await load("./logos-vietqr.png");
-	let logo_napas247 = await load("./napas247s.png");
-  
-	var ctx = c.getContext('2d');
-
-	//ctx.fillStyle = "white";
-	//ctx.fillRect(0, 0, c.width, c.height);
-
-	ctx.drawImage(img_standee, 0, 0);
-
-	ctx.drawImage(img, 1050, 300);
-
-	ctx.drawImage(logo_vietqr, 1050, 640);
-
-	ctx.drawImage(logo_napas247, 1240, 640);
-
-	ctx.fillStyle = "black";
-
-	ctx.textAlign = "center";
-	ctx.font="25px Arial";
-	ctx.fillText(name, 1200, 770);
-
-	ctx.font="20px Arial";
-	ctx.fillText(accNumber, 1200, 810);
-
-    console.log(dl);
-	if(dl)
-	{
-		//download();
-		var btn = document.getElementById("btndownload");
-		//console.log(btn);
-		btn.click();
-		//window.close();
-	}
-  
-    console.log('after load');
-})();
-
-
-async function loadImage(url) {
-  return new Promise(r => { let i = new Image(); i.onload = (() => r(i)); i.src = url; });
-}
-
-
-
-function download(){
-	console.log('download start');
-	let downloader = document.getElementById("download");
-	downloader.download = file_name;
-	
-	let image = document.getElementById("myCanvas").toDataURL("image/png")
-				.replace("image/png", "image/octet-stream");
-				
-	downloader.setAttribute("href", image);
-	
-	console.log('download end');
-}
-
-
+  gtag('config', 'G-VEP0CTE9MS');
 </script>
-
 </body>
 </html>
