@@ -1,4 +1,4 @@
-# template html
+template html
 ```html
 <!DOCTYPE html>
 <html class="no-js" lang="">
