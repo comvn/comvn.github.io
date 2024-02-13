@@ -21,7 +21,7 @@
                     </li>
                     {% for page in site.pages %}{% if page.title %}
                     <li>
-                        <a class="logo" href="{{ page.url | prepend: site.baseurl }}">{{ page.title-home }}</a>
+                        <a href="{{ page.url | prepend: site.baseurl }}">{{ page.title }}</a>
                     </li>
                     {% endif %}{% endfor %}
                 </ul>
