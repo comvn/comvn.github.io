@@ -13,7 +13,7 @@ baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
 sidebar-about-description: "Ta dại, ta tìm nơi vắng vẻ, Người khôn, người đến chốn lao xao.."
-sidebar-avatar: /img/app/avatar.gif      # use absolute URL, seeing it's used in both `/` and `/about/`
+sidebar-avatar: /img/app/programer.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
 
