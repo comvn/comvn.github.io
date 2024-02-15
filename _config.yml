@@ -5,7 +5,7 @@ SEOTitle: NDA Blog
 header-img: img/post-bg-desk.jpg
 email: 
 description: "Every failure is leading towards success."
-keyword: "NDA, NDA Blog, Software, Development, SA, QA, Agile, System, Mobile, iOS, Apple, iPhone"
+keyword: "NDA, NDA Blog, Software, Development, SA, QA, Agile, System, Mobile, iOS, Android, iPhone"
 url: "https://www.nguyenda.com"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 #github_repo: "https://github.com/comvn/comvn.github.io.git" # you code repository
@@ -19,9 +19,6 @@ sidebar-avatar: /img/app/avatar.gif      # use absolute URL, seeing it's used in
 
 # SNS settings
 RSS: false
-
-
-
 
 
 # Build settings
