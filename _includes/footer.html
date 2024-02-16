@@ -66,6 +66,8 @@
     </div>
 </footer>
 
+<a id="rocket" href="#top" class=""></a>
+
 <!-- jQuery -->
 <script src="{{ "/js/jquery.min.js " | prepend: site.baseurl }}"></script>
 
@@ -74,6 +76,18 @@
 
 <!-- Custom Theme JavaScript -->
 <script src="{{ "/js/hux-blog.min.js " | prepend: site.baseurl }}"></script>
+
+<!-- Ribbon -->
+{% if site.ribbon %}
+<script type="text/javascript" src="{{ "/js/ribbonDynamic.js" | prepend: site.baseurl }}"></script>
+{% endif %}
+
+<!-- totop(rocket) -->
+<script async="true" type="text/javascript" src="https://cdn.jsdelivr.net/gh/V-Vincen/V-Vincen.github.io/js/totop.js"></script>
+
+<!-- Scroll start -->
+<script async="async" type="text/javascript" src="https://cdn.jsdelivr.net/gh/V-Vincen/V-Vincen.github.io/js/scroll.js"></script>
+<!-- Scroll end -->
 
 <!-- Service Worker -->
 {% if site.service-worker %}
@@ -227,12 +241,6 @@
         });
     });
 </script>
-
-  
-    <!-- ribbon -->
-    <script type="text/javascript" src="/js/ribbonDynamic.js"></script>
-  
-
 
 {% endif %}
 
