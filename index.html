@@ -18,8 +18,8 @@ description: "Software development blog."
             {{ post.content | strip_html | truncate:200 }}
         </div>
     </a>
-    <p class="post-meta">
-        Posted by {% if post.author %}{{ post.author }}{% else %}{{ site.title }}{% endif %} on {{ post.date | date: "%B %-d, %Y" }}
+    <p class="post-meta" style="text-align: right;">
+        {{ post.date | date: "%B %-d, %Y" }}
     </p>
 </div>
 <hr>

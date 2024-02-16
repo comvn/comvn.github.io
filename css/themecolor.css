@@ -954,6 +954,10 @@ textarea.gt-header-textarea::placeholder {
   text-transform: uppercase;
 } */
 .toggle {
+  position: relative;
+  float: right;
+  background: none;
+  padding: 18px 10px;
   position: fixed;
   bottom: 1rem;
   left: 2.5rem;
