@@ -14,7 +14,7 @@
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ site.baseurl }}/favicon.ico">
 
-    <!-- Safari Webpage Icon    by-BY -->
+    <!-- Safari Webpage Icon -->
     <link rel="apple-touch-icon" href="{{ site.baseurl }}/img/apple-touch-icon.png">
     
     <!-- Canonical URL -->
@@ -38,16 +38,20 @@
     <link rel="stylesheet" href="{{ "/css/top.css" | prepend: site.baseurl }}">
     <!-- top end -->
 
-    <!-- ThemeColor start -->
+    <!-- Scroll start -->
     <link rel="stylesheet" href="{{ "/css/scroll.css" | prepend: site.baseurl }}"/>
-    <!-- ThemeColor end -->
+    <!-- Scroll end -->
 
+
+    <!-- ThemeColor start -->
+    <link rel="stylesheet" href="{{ "/css/themecolor.css" | prepend: site.baseurl }}"/>
+    <!-- ThemeColor end -->
 
     <!-- Custom Fonts -->
     <!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css"> -->
     <!-- Hux change font-awesome CDN to qiniu -->
     <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     
     <link href='http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -75,6 +79,23 @@
             font-family: 'Broadway Engraved', sans-serif;
             font-weight: 400;
         }
+    </style>
+
+    <style type="text/css">
+    .body--light {
+      --light-mode: none;
+      --dark-mode: block;
+    }
+    .body--dark {
+      --light-mode: block;
+      --dark-mode: none;
+    }
+    i.mdui-icon.material-icons.light-mode {
+      display: var(--light-mode);
+    }
+    i.mdui-icon.material-icons.dark-mode {
+      display: var(--dark-mode);
+    }
     </style>
 
     <style>
