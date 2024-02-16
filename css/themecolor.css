@@ -16,6 +16,11 @@
   --navbar-brand-color-hover_1170: #0085a1;
   --navbar-brand-color_768: white;
   --navbar-brand-color-hover_768: rgba(255, 255, 255, 0.8);
+
+  --color-pink-light: #ffe6fa;
+  --color-cyan-light: #e3fdf5;
+  --nav-bg: linear-gradient(-225deg, var(--color-cyan-light) 0, var(--color-pink-light) 100%);
+
   /* post-title、post-subtitle、post-content */
   --post-content-color-hover: #0085a1;
   /* tags */
@@ -172,13 +177,19 @@ body {
   color: var(--navbar-nav-a-color-hover);
 }
 
-@media only screen and (min-width: 1170px) {
+@media only screen and (min-width: 270px) {
   .navbar-custom.is-fixed {
     position: fixed;
     top: -61px;
     background-color: var(--navbar-color);
     border-bottom: 1px solid var(--border-bottom-color);
   }
+  .navbar-custom.is-visible.toggle {
+    color: var(--navbar-brand-color_1170);
+  }
+}
+
+@media only screen and (min-width: 1170px) {
 
   .navbar-custom.is-fixed .navbar-brand {
     color: var(--navbar-brand-color_1170);
