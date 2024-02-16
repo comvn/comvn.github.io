@@ -958,11 +958,11 @@ textarea.gt-header-textarea::placeholder {
   float: right;
   background: none;
   padding: 18px 10px;
-  /*position: fixed;*/
+  /*position: fixed;
   bottom: 1rem;
   left: 2.5rem;
-  /* background-color: var(--background-color); */
-  color: var(--toggle-color);
+   background-color: var(--background-color); */
+  color: #fff;
   /* border: 1px dotted var(--toggle-border-color); */
   /* padding: 1.5rem 1.5rem;*/
   z-index: 20;
