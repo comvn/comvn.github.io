@@ -4,7 +4,7 @@ title-home: NDA Blog
 SEOTitle: NDA Blog
 header-img: img/bg/monterey.jpg
 email: 
-description: "Every failure is leading towards success."
+description: "Keep it simple do it well."
 keyword: "NDA, NDA Blog, Software, Development, SA, QA, Agile, System, Mobile, iOS, Android, iPhone"
 url: "https://www.nguyenda.com"          # your host, for absolute URL
 baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
@@ -12,7 +12,7 @@ baseurl: ""      # for example, '/blog' if your blog hosted on 'host/blog'
 
 # Sidebar settings
 sidebar: true                           # whether or not using Sidebar.
-sidebar-about-description: "Ta dại, ta tìm nơi vắng vẻ, Người khôn, người đến chốn lao xao.."
+sidebar-about-description: "Keep It Simple Do It Well"
 sidebar-avatar: /img/app/programer.jpg      # use absolute URL, seeing it's used in both `/` and `/about/`
 
 
