@@ -177,12 +177,21 @@ body {
   color: var(--navbar-nav-a-color-hover);
 }
 
-@media only screen and (min-width: 270px) {
+@media only screen and (min-width: 200px) {
   .navbar-custom.is-fixed {
     position: fixed;
     top: -61px;
     background-color: var(--navbar-color);
-    border-bottom: 1px solid var(--border-bottom-color);
+    border-bottom: 0px solid var(--border-bottom-color);
+  }
+  .navbar-custom.is-visible {
+    background: linear-gradient(-225deg, var(--color-cyan-light) 0, var(--color-pink-light) 100%);
+    -webkit-transform: translate3d(0,100%,0);
+    -moz-transform: translate3d(0,100%,0);
+    -ms-transform: translate3d(0,100%,0);
+    -o-transform: translate3d(0,100%,0);
+    transform: translate3d(0,100%,0);
+    box-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.1);
   }
   .navbar-custom.is-visible.toggle {
     color: var(--navbar-brand-color_1170);
