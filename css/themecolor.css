@@ -193,7 +193,7 @@ body {
     transform: translate3d(0,100%,0);
     box-shadow: 0.1rem 0.1rem 0.2rem rgba(0,0,0,0.1);
   }
-  .navbar-custom.is-visible.toggle {
+  .is-visible .toggle {
     color: var(--navbar-brand-color_1170);
   }
 }
@@ -982,7 +982,7 @@ textarea.gt-header-textarea::placeholder {
   bottom: 1rem;
   left: 2.5rem;
    background-color: var(--background-color); */
-  color: #fff;
+  color: var(--navbar-brand-color_768);
   /* border: 1px dotted var(--toggle-border-color); */
   /* padding: 1.5rem 1.5rem;*/
   z-index: 20;
@@ -1003,6 +1003,13 @@ textarea.gt-header-textarea::placeholder {
   /* text-decoration: none; */
   background-color: var(--toggle-hover);
   cursor: pointer;
+}
+
+@media only screen and (min-width: 200px) {
+  
+  .is-visible .toggle {
+    color: var(--navbar-brand-color_1170);
+  }
 }
 
 /* ================================================ Switch color mode button End ======================================================= */
