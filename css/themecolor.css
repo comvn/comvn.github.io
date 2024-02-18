@@ -55,7 +55,7 @@
   --tag_cloud-color: #fff;
   --tag_cloud-color-hovor: white;
   /* img */
-  --img-shadow-color: 5px 5px 10px 5px rgba(0, 0, 0, .5);
+  --img-shadow-color: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   --img-about-shadow-color: 5px 5px 10px 5px rgba(0, 0, 0, .5);
   /* viewer */
   --viewer-background-color: rgba(0, 0, 0, .5);
