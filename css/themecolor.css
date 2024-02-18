@@ -501,7 +501,7 @@ hr {
 .body--dark {
   --color-default: rgba(255, 255, 255, 0.8);
   --blockquote-color: #a3a3a3;
-  --post-container-a-color: #b5154b;
+  --post-container-a-color: #008A00;
   --post-container-a-color-hover: #00b74f;
   --table-border-color: rgba(255, 255, 255, 0.8);
   /* tip */
@@ -513,11 +513,11 @@ hr {
   /* gitalk comment */
   --gt-avatar-github: #f6f9fc;
   --gt-color-default: #f6f9fc;
-  --gt-basic-color: #b5154b;
+  --gt-basic-color: #008A00;
   --gt-btn-preview-color: #f6f9fe;
   --gt-btn-preview-color-hovor: #f6f9fc;
   --gt-container-a-hovor: #00b74f;
-  --gt-comments-null-color: #ff3860;
+  --gt-comments-null-color: #008A00;
   --gt-container-border-color: #f6f9fc;
   --gt-container-background-color: rgb(34, 38, 49);
   --gt-container-background-color-hover: rgb(44, 49, 62);
@@ -525,7 +525,7 @@ hr {
   --gt-textarea-placeholder: #f6f9fc;
   --gt-box-shadow-border: #ffffff;
   --gt-box-shadow: rgb(191, 191, 191);
-  --gt-comment-body-folded: #b5154b;
+  --gt-comment-body-folded: #008A00;
   --gt-popup: #ffffff;
   --gt-comment-body: #f6f9fc;
   --gt-comment-text-date: #f6f9fc;
@@ -545,7 +545,7 @@ hr {
   --post-container-highlight-color: #4d4d4c;
   --post-container-highlight-background: #f6f9fc;
   --post-container-highlight-pre-comment: #8e908c;
-  --post-container-highlight-pre: #c82829;
+  --post-container-highlight-pre: #008A00;
   --post-container-highlight-pre-number: #f5871f;
   --post-container-highlight-pre-ruby: #718c00;
   --post-container-highlight-pre-title: #3e999f;
