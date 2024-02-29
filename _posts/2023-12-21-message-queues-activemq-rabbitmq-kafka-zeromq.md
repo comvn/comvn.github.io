@@ -1,7 +1,7 @@
 ---
 layout:     post
-title:      Message Queues - ActiveMQ, RabbitMQ, Kafka, ZeroMQ - System design
-subtitle:   
+title:      Message Queues - 
+subtitle:   ActiveMQ, RabbitMQ, Kafka, ZeroMQ
 author:     NDA
 header-img: img/posts/bg15.png
 header-mask: 0.5

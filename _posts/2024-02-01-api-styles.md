@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      API Styles - System design
+title:      API Styles
 subtitle:   REST, GraphQL, WebSocket, Webhook, RPC/gRPC, SOAP
 author:     NDA
 header-img: img/posts/bg03.jpg

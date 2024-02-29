@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Load Balancer, Reverse Proxy, Forward Proxy, API Gateway - System design
+title:      Load Balancer, Reverse Proxy, Forward Proxy, API Gateway
 subtitle:   
 author:     NDA
 header-img: img/posts/bg09.jpg
