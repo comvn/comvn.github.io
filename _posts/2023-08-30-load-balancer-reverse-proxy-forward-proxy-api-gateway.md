@@ -1,6 +1,6 @@
 ---
 layout:     post
-title:      Load Balancer, Reverse Proxy, Forward Proxy, API Gateway
+title:      Load Balancer, Reverse Proxy, Forward Proxy, API Gateway - System design
 subtitle:   
 author:     NDA
 header-img: img/posts/bg09.jpg
@@ -124,6 +124,8 @@ The choice of a load-balancing algorithm depends on the specific needs and objec
 <p class="line-space" > <br> </p>
 
 <p>This algorithm hashes the client's IP address to determine the server for routing the request, ensuring session persistence by always directing a specific client's requests to the same server.</p>
+
+<div style="clear:both;"></div>
 
 **Dynamic Algorithms**
 
