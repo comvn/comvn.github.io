@@ -3,16 +3,12 @@ layout:     post
 title:      Using Query Parameters and Headers API
 subtitle:   Query parameters and headers in REST APIs improve flexibility, security, and user experience. Optimize performance and prioritize usability for effective design.
 author:     NDA
-header-img: img/posts/bg10.jpg
-header-mask: 0.5
+header-img: img/posts/apicall1.png
+header-mask: 0.6
 catalog:    true
 tags:
     - API Design
 ---
-
-https://dzone.com/articles/using-query-parameters-and-headers-in-rest-api-des
-
-![]()
 
 In today's fast-paced digital landscape, REST APIs are essential for connecting and exchanging data between different systems and applications. But with so many different components and considerations, it can be a challenge to design an API that is both efficient and user-friendly.
 

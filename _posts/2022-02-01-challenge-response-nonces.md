@@ -3,16 +3,12 @@ layout:     post
 title:      Challenge Response - Nonces in Secure Authentication Mechanisms
 subtitle:   
 author:     NDA
-header-img: img/posts/bg10.jpg
+header-img: img/posts/08.jpg
 header-mask: 0.5
 catalog:    true
 tags:
     - Secure
 ---
-
-https://fastercapital.com/content/Challenge-Response--Nonces-in-Secure-Authentication-Mechanisms.html
-
-![]()
 
 # 1. Introduction to Nonces in Secure Authentication Mechanisms
 Insecure authentication mechanisms have been a long-standing issue in the world of cybersecurity. The use of passwords as the sole means of authentication has been proven to be unreliable, as users tend to choose weak passwords or reuse the same password across multiple platforms. Attackers can take advantage of this by using various techniques to steal or guess passwords, such as phishing, brute-force attacks, or password spraying. To mitigate these risks, secure authentication mechanisms have been developed, one of which is the challenge-response mechanism that uses nonces.

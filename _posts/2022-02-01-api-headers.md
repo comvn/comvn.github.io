@@ -3,8 +3,8 @@ layout:     post
 title:      API Headers
 subtitle:   Understand API headers' importance, purpose, examples, and best practices. Explore custom headers and advanced techniques for optimized API usage.
 author:     NDA
-header-img: img/posts/bg10.jpg
-header-mask: 0.5
+header-img: img/posts/net03.jpg
+header-mask: 0.6
 catalog:    true
 tags:
     - API Design
