@@ -54,10 +54,12 @@
 	<a id="downloadLink" href="#" style="display:none">Tải toàn bộ ảnh (zip)</a>
 	<p id="note"></p>
 	<div id="container"></div>
-	<div>
+	<div style="display: none;">
 		<canvas id="myCanvas" width="481" height="670">
 		Your browser does not support the HTML5 canvas tag.</canvas>
 	<div>
+
+		Excel to csv unicode https://products.aspose.app/cells/conversion/excel-to-csv
 </div>
 
 <script>
@@ -65,7 +67,7 @@
 	fileUpload.addEventListener("change", (event) => {
 		const { files } = event.target;
 		
-		console.log("file", files);
+		//console.log("file", files);
 
 		const file = event.target.files[0];
 
@@ -73,7 +75,7 @@
 
 		reader.onload = function (e) {
 			const csvArray = csvToArr(e.target.result, ",");
-			console.log(JSON.stringify(csvArray, null, 4));
+			//console.log(JSON.stringify(csvArray, null, 4));
 
 			default_data = csvArray;
 			customers = default_data;
@@ -761,10 +763,10 @@
 	var CRC_LENGTH = '04';
 	var ATM_CARD_NUMBER_PREFIX = '9704';
 
-	function genQRText(toAcc, accName, msg)
+	function genQRText(toAcc, accName, msg, _qrType)
 	{
 		var qrRawData = {
-			qrType: 'STATIC',
+			qrType: _qrType,
 			bin: '970432',
 			receiverNumber: toAcc,
 			amount: '',
@@ -777,7 +779,7 @@
 		const rawQRString = generateRawQRString(qrProperties);
 		const qrContentNoChecksum = rawQRString + CRC_ID + CRC_LENGTH;
 		
-		console.log('qrContentNoChecksum: ' + qrContentNoChecksum);
+		//console.log('qrContentNoChecksum: ' + qrContentNoChecksum);
 
 		const checksum = genCRC(qrContentNoChecksum);
 		
@@ -995,6 +997,9 @@ var customers;
 var zip_filename;
 var c = document.getElementById("myCanvas");
 var ctx = c.getContext('2d');
+var img_vietQR;
+var img_napas247;
+var img_bg;
 
 const base64 = {
 	decode: s => decodeURIComponent(escape(window.atob( s ))),
@@ -1022,9 +1027,13 @@ window.onload = function()
 
 	zip_filename = "qr_400";
 
-	console.log(default_data);
+	img_vietQR = loadsync("https://www.nguyenda.com/shopqr/logo-vietqr_170.png");
+	img_napas247 = loadsync("https://www.nguyenda.com/shopqr/napas247_180.png");
+	img_bg = loadsync("https://www.nguyenda.com/shopqr/khung_qr_new.png");
+	//console.log(img_vietQR);
+	//console.log(default_data);
 	crCustTableData();
-
+	
 };
 
 </script>
@@ -1077,6 +1086,9 @@ function crCustTableData()
 	while( tbl.rows.length > 1) tbl.rows[1].remove();
 
 	for(cust of customers) {
+		if(!cust.CUSTOMER_NAME)
+			continue;
+
 		const tr = document.createElement("tr");
 		tr.id = 'tr_' + cust.STT;
 		const tdIdx = document.createElement("td");
@@ -1111,6 +1123,23 @@ async function crimg(url) {
   return await myPromise;
 }
 
+function loadsync(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let i = new Image(); 
+  i.setAttribute('crossorigin', 'anonymous'); 
+  i.onload = (() => r(i)); 
+  i.src = url; 
+  
+  return i;
+}
+
+async function crimg(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let myPromise = new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
+  
+  return await myPromise;
+}
+
 function load(url) {
   return crimg(url);
 }
@@ -1132,11 +1161,13 @@ function genQRTextItem(customer)
 	var content = shopCode ? shopCode + ' ' : '';
 	content +=  accName + ' chuyen tien';
 
-	var customer_qr_text = genQRText(accNo, accName, content);
+	var _qrType = shopCode ? 'DYNAMIC' : 'STATIC';
+
+	var customer_qr_text = genQRText(accNo, accName, content, _qrType);
 	return customer_qr_text;
 }
 
-async function genBg()
+async function genBg1()
 {
 	ctx.beginPath();
 
@@ -1197,39 +1228,50 @@ async function genBg()
 	ctx.drawImage(img_napas247, 270, rectHeight - 205);
 
 }
-let img_vietQR = await load("https://www.nguyenda.com/shopqr/logo-vietqr_170.png");
-let img_napas247 = await load("https://www.nguyenda.com/shopqr/napas247_180.png");
+
+async function genBg()
+{
+	//create image qr standee
+		//let img_standee_template = await load(standee.url);
+
+	ctx.drawImage(img_bg, 0, 0);
+}
+
 
 function genLink(customer)
 {
+	if(!customer.CUSTOMER_NAME)
+		return;
+
 	var fileName = customer.STT + "_" + customer.CUSTOMER_NAME.replaceAll(" ","_") + "_qr_standee.png";
 
 	var item_qr = genQRTextItem(customer);
 	
 
-	let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + item_qr + "&chs=370x370&choe=UTF-8&chld=L|0";
+	let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + item_qr + "&chs=355x355&choe=UTF-8&chld=L|0";
 	console.log(linkqr);
 	var standee = getTemplate('0');
 	
 	(async() => {
-		//create image qr standee
-		let img_standee_template = await load(standee.url);
+		
 		//console.log(img_standee_template);
 		let img_qr = await load(linkqr);
 		//console.log(img_qr);
 		
-		//ctx.drawImage(img_standee_template, 0, 0);
+		
 
 		genBg();
 		
 		ctx.drawImage(img_qr, standee.qr_offset.x, standee.qr_offset.y);
 		
-		//shop name
-		ctx.fillStyle = "black";
-		ctx.textAlign = "center";
-		ctx.font = "22px SVN-Gilroy XBold";
-		ctx.fillText(customer.SHOP_NAME, standee.shop_offset.x, standee.shop_offset.y);
-		
+		if(customer.SHOP_NAME)
+		{
+			//shop name
+			ctx.fillStyle = "black";
+			ctx.textAlign = "center";
+			ctx.font = "22px SVN-Gilroy XBold";
+			ctx.fillText(customer.SHOP_NAME, standee.shop_offset.x, standee.shop_offset.y);
+		}
 		//name
 		ctx.font = "28px SVN-Gilroy XBold";
 		ctx.fillText(customer.CUSTOMER_NAME, standee.name_offset.x, standee.name_offset.y);
@@ -1255,7 +1297,11 @@ function genLink(customer)
 		//console.log('download end');
 		
 		tdLink.appendChild(link);
-		
+		//break
+		const breakspan = document.createElement("span");
+		breakspan.textContent = ' ';
+		tdLink.appendChild(breakspan);
+
 		//view img
 		const linkView = document.createElement("a");
 		linkView.textContent = 'Xem ảnh';
@@ -1310,10 +1356,10 @@ let qr_standee_template_define = [
     "url": "https://www.nguyenda.com/shopqr/khung_qr_new.png",
 	"width" : 481,
 	"height" : 670,
-    "qr_offset": { "x" : 60, "y" : 85},
-	"shop_offset": { "x" : 240, "y" : 55},
-	"name_offset": { "x" : 240, "y" : 590},
-	"acc_offset": { "x" : 240, "y" : 635},
+    "qr_offset": { "x" : 60, "y" : 90},
+	"shop_offset": { "x" : 240, "y" : 65},
+	"name_offset": { "x" : 240, "y" : 580},
+	"acc_offset": { "x" : 240, "y" : 625},
   },
 ];
 
