@@ -42,17 +42,62 @@
 	</h1>
 </div>
 <div id="app">
+	Chọn file csv upload:
+	<form id="csvForm">
+		<input type="file" id="csvInput" accept=".csv" />
+	</form>
+
 	<p id="note"></p>
+	
 	<button id="btndownload" type="button" onClick="return startGenerateImg()">Tạo ảnh</button>
 
 	<a id="downloadLink" href="#" style="display:none">Tải toàn bộ ảnh (zip)</a>
 	<p id="note"></p>
 	<div id="container"></div>
-	<div style='display:none;'>
+	<div>
 		<canvas id="myCanvas" width="481" height="670">
 		Your browser does not support the HTML5 canvas tag.</canvas>
 	<div>
 </div>
+
+<script>
+	const fileUpload = document.querySelector("#csvInput");
+	fileUpload.addEventListener("change", (event) => {
+		const { files } = event.target;
+		
+		console.log("file", files);
+
+		const file = event.target.files[0];
+
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			const csvArray = csvToArr(e.target.result, ",");
+			console.log(JSON.stringify(csvArray, null, 4));
+
+			default_data = csvArray;
+			customers = default_data;
+			
+			crCustTableData();
+		};
+
+		reader.readAsText(file);
+	})
+
+	function csvToArr(stringVal, splitter) {
+		const [keys, ...rest] = stringVal
+			.trim()
+			.split("\r\n")
+			.map((item) => item.split(splitter));
+
+		const formedArr = rest.map((item) => {
+			const object = {};
+			keys.forEach((key, index) => (object[key] = item.at(index)));
+			return object;
+		});
+		return formedArr;
+	}
+</script>
 
 <script type="text/javascript">
 	/*
@@ -977,7 +1022,7 @@ window.onload = function()
 
 	zip_filename = "qr_400";
 
-	console.log(qr_data);
+	console.log(default_data);
 	crCustTableData();
 
 };
@@ -997,6 +1042,8 @@ function crCustTempTable()
 	thead += '<th>Thứ tự</th>';
 	thead += '<th>Tên tài khoản</th>';
 	thead += '<th>Số tài khoản</th>';
+	thead += '<th>Shop code</th>';
+	thead += '<th>Tên shop</th>';
 	thead += '<th>Tải file</th>';
 	thead += '</thead>';
 
@@ -1026,24 +1073,31 @@ function crCustTableData()
 		tbl = document.getElementById('tblCust');
 	}
 	
+
+	while( tbl.rows.length > 1) tbl.rows[1].remove();
+
 	for(cust of customers) {
 		const tr = document.createElement("tr");
-		tr.id = 'tr_' + cust.idx;
+		tr.id = 'tr_' + cust.STT;
 		const tdIdx = document.createElement("td");
 		const tdName = document.createElement("td");
 		const tdAcc = document.createElement("td");
-		
+		const tdShopCode = document.createElement("td");
+		const tdShopName = document.createElement("td");
 		const tdLast = document.createElement("td");
-		tdLast.id = 'link_' + cust.idx;
+		tdLast.id = 'link_' + cust.STT;
 		
-		tdIdx.textContent = cust[0];
-		tdName.textContent = cust[2];
-		tdAcc.textContent = cust[1];
+		tdIdx.textContent = cust.STT;
+		tdName.textContent = cust.CUSTOMER_NAME;
+		tdAcc.textContent = cust.ACCTNO;
+		tdShopCode.textContent = cust.SHOP_CODE;
+		tdShopName.textContent = cust.SHOP_NAME;
 		
 		tr.appendChild(tdIdx);
 		tr.appendChild(tdName);
 		tr.appendChild(tdAcc);
-		
+		tr.appendChild(tdShopCode);
+		tr.appendChild(tdShopName);
 		tr.appendChild(tdLast);
 	
 		tbl.appendChild(tr);
@@ -1071,10 +1125,10 @@ function genLinks(custs)
 
 function genQRTextItem(customer)
 {
-	var accNo = customer[1];
-	var accName = customer[2];
-	var shopCode = customer[3];
-	var shopName = customer[4];
+	var accNo = customer.ACCTNO;
+	var accName = customer.CUSTOMER_NAME;
+	var shopCode = customer.SHOP_CODE;
+	var shopName = customer.SHOP_NAME;
 	var content = shopCode ? shopCode + ' ' : '';
 	content +=  accName + ' chuyen tien';
 
@@ -1082,9 +1136,73 @@ function genQRTextItem(customer)
 	return customer_qr_text;
 }
 
+async function genBg()
+{
+	ctx.beginPath();
+
+	var rectX = 2;
+	var rectY = 2;
+	var rectWidth = 481;
+	var rectHeight = 680;
+	var cornerRadius = 20;
+	var lineWidth = 5;
+
+	// Draw inner filled white rectangle
+	ctx.beginPath();
+	ctx.fillStyle = "white";
+	ctx.roundRect(rectX, rectY, rectWidth - 5, rectHeight - 15, cornerRadius);
+	//ctx.fillRect(20, 20, 150, 100);
+	ctx.fill();
+
+	ctx.beginPath();
+
+	// Create a Gradient
+	const grd = ctx.createLinearGradient(rectX, rectY, rectWidth, 0);
+	grd.addColorStop(0, "#1e4283");
+	grd.addColorStop(1, "#2ab14e");
+
+	// Draw a filled Rectangle
+	//ctx.fillStyle = grd;
+	ctx.strokeStyle = grd;
+	ctx.lineWidth = lineWidth;
+	ctx.roundRect(rectX, rectY, rectWidth - 4, rectHeight - 14, cornerRadius);
+	//ctx.fillRect(20, 20, 150, 100);
+	//ctx.fill();
+	ctx.stroke();
+
+	// Draw line
+
+	ctx.beginPath();
+	ctx.moveTo(1, rectHeight - 145);
+	ctx.lineTo(rectWidth, rectHeight - 145);
+
+	ctx.stroke();
+
+	// |
+
+	ctx.beginPath();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "Gray";
+	ctx.moveTo(rectWidth / 2, rectHeight - 215);
+	ctx.lineTo(rectWidth / 2, rectHeight - 165);
+
+	ctx.stroke();
+
+	// vietQR
+	
+	ctx.drawImage(img_vietQR, 50, rectHeight - 215);
+
+	// napas247
+	
+	ctx.drawImage(img_napas247, 270, rectHeight - 205);
+
+}
+let img_vietQR = await load("https://www.nguyenda.com/shopqr/logo-vietqr_170.png");
+let img_napas247 = await load("https://www.nguyenda.com/shopqr/napas247_180.png");
+
 function genLink(customer)
 {
-	var fileName = customer[0] + "_" + customer[2].replaceAll(" ","_") + "_qr_standee.png";
+	var fileName = customer.STT + "_" + customer.CUSTOMER_NAME.replaceAll(" ","_") + "_qr_standee.png";
 
 	var item_qr = genQRTextItem(customer);
 	
@@ -1100,7 +1218,9 @@ function genLink(customer)
 		let img_qr = await load(linkqr);
 		//console.log(img_qr);
 		
-		ctx.drawImage(img_standee_template, 0, 0);
+		//ctx.drawImage(img_standee_template, 0, 0);
+
+		genBg();
 		
 		ctx.drawImage(img_qr, standee.qr_offset.x, standee.qr_offset.y);
 		
@@ -1108,18 +1228,18 @@ function genLink(customer)
 		ctx.fillStyle = "black";
 		ctx.textAlign = "center";
 		ctx.font = "22px SVN-Gilroy XBold";
-		ctx.fillText(customer[4], standee.shop_offset.x, standee.shop_offset.y);
+		ctx.fillText(customer.SHOP_NAME, standee.shop_offset.x, standee.shop_offset.y);
 		
 		//name
 		ctx.font = "28px SVN-Gilroy XBold";
-		ctx.fillText(customer[2], standee.name_offset.x, standee.name_offset.y);
+		ctx.fillText(customer.CUSTOMER_NAME, standee.name_offset.x, standee.name_offset.y);
 		
 		//acc number
 		ctx.font = "27px SVN-Gilroy SemiBold";
-		ctx.fillText(customer[1], standee.acc_offset.x, standee.acc_offset.y);
+		ctx.fillText(customer.ACCTNO, standee.acc_offset.x, standee.acc_offset.y);
 		
 		//create link
-		let tdLink = document.getElementById('link_' + customer.idx);
+		let tdLink = document.getElementById('link_' + customer.STT);
 
 		const link = document.createElement("a");
 		link.textContent = 'Tải ảnh QR';
@@ -1187,13 +1307,13 @@ let qr_standee_template_define = [
   {
     "code":"0",
     "name": "Cá chép",
-    "url": "https://www.nguyenda.com/shopqr/khung_qr.png",
+    "url": "https://www.nguyenda.com/shopqr/khung_qr_new.png",
 	"width" : 481,
 	"height" : 670,
     "qr_offset": { "x" : 60, "y" : 85},
-	"shop_offset": { "x" : 240, "y" : 65},
-	"name_offset": { "x" : 240, "y" : 580},
-	"acc_offset": { "x" : 240, "y" : 625},
+	"shop_offset": { "x" : 240, "y" : 55},
+	"name_offset": { "x" : 240, "y" : 590},
+	"acc_offset": { "x" : 240, "y" : 635},
   },
 ];
 
@@ -1215,11 +1335,17 @@ let qr_standee_template_define = [
 </script>
 
 <script>
-	var qr_data = [
-		[1, '0932388685', 'DAO ANH NGUYEN', 'AA0014', 'SHOP NAME']
+	var default_data = [
+		{
+			"STT": "27",
+			"CUSTOMER_NAME": "HOANG HAI YEN",
+			"ACCTNO": "1717111983",
+			"SHOP_CODE": "AA20870",
+			"SHOP_NAME": "CA PHE HAI BON DTN"
+		}
 	];
 
-	var customers = qr_data;
+	var customers = default_data;
 </script>
 
 </body>
