@@ -50,12 +50,12 @@ What Do You Get With the POC Approach? POC is a tool for validating a unique pro
 * **Make the correct choice**: To reduce major risks, you can create multiple POCs using different technologies.
 * **Staying ahead of the competition**: A POC is an inexpensive way to develop a new and unique product that will revolutionize the business.
 
-### How Does a Proof of Concept Work?
+**How Does a Proof of Concept Work?**
 If you’re doubtful about the feasibility of your idea, POC has two possibilities for you either a yes or a no. With a positive response, you can continue to build your project, whereas an adverse reaction won’t let you continue with a potentially non-viable project.
 
 As a part of an internal approach, POC process flow is not meant to be shown to your users but to solve serious issues. Pitching it to your potential investors can reap the fruits of raising seed funding.
 
-### Success Story of Walmart POC
+**Success Story of Walmart POC**
 Blockchain technology is used to create cryptocurrencies. However, Walmart decided to execute this technology to improve its logistics system by tracing product origins. The Walmart team created a POC to understand whether blockchain technology is suitable for this idea.
 
 In 2016, they created two mini products to test blockchain technology. The first one was used to track mangoes’ origin in the US, and the other was to track the meat sold by Walmart stores in China.
@@ -72,13 +72,13 @@ Goal: To demonstrate how the product will look
 
 A **prototype** is an interactive mirror of your products’ eye that manifests the main design elements and determines the user flows. It focuses on determining the look and feel of the product and understanding the fundamental project workflows needed to be included during the product development stage.
 
-### What is a Mobile app prototype?
+**What is a Mobile app prototype?**
 
 A mobile app prototype shows how an app will flow from one screen to another and processes the app development. You can visualize the UX before you start developing your project. Many individuals get confused about the Proof of concept vs. Prototype. The basic difference between proof of concept and prototype is that the former demonstrates whether a product or its features could be developed.
 
 In contrast, the latter demonstrates how it will be developed.
 
-### What Do You Get With the Prototype Approach?
+**What Do You Get With the Prototype Approach?**
 
 Have a look at the benefits of implementing a Prototype for your startup:
 
@@ -87,13 +87,13 @@ Have a look at the benefits of implementing a Prototype for your startup:
 * **Immediate feedback**: While testing the prototype, you get direct feedback from live people that helps you quickly identify downsides, fix them, and continue further development.
 * **Initial investment**: A tested prototype with great looks can be shown to your investors, and you can convince them that your idea is worth investing in.
 
-### How does Prototyping Work?
+**How does Prototyping Work?**
 
 How to build a product prototype? To create a simplified introductory design, the startup owner will define all system requirements. Then, the prototype will be developed & tested. Once you identify the errors and strong points, the developer evaluates the feedback.
 
 Each prototype leads to the development of a new system. The entire development system is repeated until its final version meets the requirements and user specifications. This approach is the most widespread. Thus, the process flow is modified following the chosen prototyping type.
 
-### Original iPhone Prototype From 1983
+**Original iPhone Prototype From 1983**
 
 Do you know that the fan following for iPhone began with a prototype? We saw the first iPhone in 2007, but the company had already gone through several iterations before zeroing down to this product which took the market by storm. The image below represents the prototype for a touchscreen Apple phone.
 
@@ -111,7 +111,7 @@ A **Minimum Viable Product** has a minimum required set of features to serve its
 
 From fundamental concept to the existence, MVP is a primary system on its own that depicts your system’s basic version providing a small set of users and comments. It is a combination of microservices that mainly focus on creating one whole thing at a time. MVP is one of the most in-demand approaches for mapping product fit.
 
-### What Do You Get With the MVP Approach?
+**What Do You Get With the MVP Approach?**
 
 Here are the main benefits of an MVP:
 
@@ -119,7 +119,7 @@ Here are the main benefits of an MVP:
 * **A tool to attract your first user**: MVP is not a thoroughly refined product, but you can originate it on the market and get your first profitable client.
 * **A chance to draw investors’ attention**: Nobody wants to spend on ideas with unpredictable market demand. A wholly developed MVP gaining accurate user feedback is excellent assurance for investors to vest their interests.
 
-### MVP Example – Twitter
+**MVP Example – Twitter**
 
 ![](https://www.bacancytechnology.com/blog/wp-content/uploads/2020/11/20-11-2020-%E2%80%93-2.png)
 
@@ -165,7 +165,7 @@ If answers to the above questions are YES, then you need to go the safe way and 
 
 ![](https://www.bacancytechnology.com/blog/wp-content/uploads/2020/11/20-11-2020-%E2%80%93-5.png)
 
-## When to choose a POC?
+**When to choose a POC?**
 
 POC is the first step while developing a fully-fledged product. You can implement this approach if the statements given below align with your current goals:
 
@@ -175,7 +175,7 @@ POC is the first step while developing a fully-fledged product. You can implemen
 * Do not implement the previously applied technology in your industry.
 * When you aim to share your product and internal knowledge with the team members.
 
-## When to choose a prototype?
+**When to choose a prototype?**
 
 After creating a POC, you can move further to the prototype stage. Some clues that reveal your need to begin developing a prototype is:
 
@@ -184,7 +184,7 @@ After creating a POC, you can move further to the prototype stage. Some clues th
 * You aim to design a product having excellent user flow and user experience.
 * When you have a quick deadline for presenting your idea to the investors.
 
-## When to choose a Minimum Viable Product (MVP)?
+**When to choose a Minimum Viable Product (MVP)?**
 
 An MVP is not a mature product, but it is considered the last stage towards its development. You can implement this approach if:
 
@@ -216,18 +216,20 @@ In the explanation above, I tried to erase the thin line between poc vs mvp vs p
 
 # Frequently Asked Questions (FAQs)
 
-## Why would you launch an MVP and not a prototype?
+**Why would you launch an MVP and not a prototype?**
 
 An MVP is a minimum version of the final product, and it’s delivered to the market right away. This means that it has to be simple and well-polished, without bugs or other problems. On the other hand, prototypes are created for the sake of finding those errors and often are far from being perfect
 
-## What technique can be used for planning MVP for a product?
+**What technique can be used for planning MVP for a product?**
 
 **Prioritization Matrix**
 
 This step helps you identify where you can make the most impact on the urgency of the feature. Using a prioritization matrix, you can decide what needs to be included in your MVP and what features can be included in later releases.
 
-## What comes first, pilot or MVP?
+**What comes first, pilot or MVP?**
+
 Prototypes will have been followed to shape how the final product will work. Once you’ve refined these prototype designs to a point you’re happy with, the next stage will be a pilot. This is a stepping stone to your full launch of a minimum viable product (MVP) or service.
 
-## What is the difference between prototype and testing?
+**What is the difference between prototype and testing?**
+
 A Prototype can be a test case for an idea. It is achieved not by building a small-scale version of a service or product but by testing several parts to unveil the various possibilities of scaling it to reach the final service or product.

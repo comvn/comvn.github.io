@@ -42,7 +42,7 @@ While REST has been the de facto standard for building APIs for a long time, oth
 **Format**: XML, JSON, HTML, plain text
 **Transport protocol**: HTTP/HTTPS
 
-## Key Concepts and Characteristics
+**Key Concepts and Characteristics**
 * **Resource**: In REST, everything is a resource. A resource is an object with a type, associated data, relationships to other resources, and a set of methods that operate on it. Resources are identified by their URIs (typically a URL).
 * **CRUD Operations**: REST services often map directly to CRUD (Create, Read, Update, Delete) operations on resources.
 * **HTTP Methods**: REST systems use standard HTTP methods:
@@ -82,14 +82,14 @@ While REST has been the de facto standard for building APIs for a long time, oth
 
 * **HATEOAS**: Hypermedia As The Engine Of Application Stat is a REST web service principle that enables clients to interact with and navigate through a web application entirely based on the hypermedia provided dynamically by the server in its responses, promoting loose coupling and discoverability.
 
-## Use Cases
+**Use Cases**
 
 * **Web Services**: Many web services expose their functionality via REST APIs, allowing third-party developers to integrate and extend their services.
 * **Mobile Applications**: Mobile apps often communicate with backend servers using REST APIs to fetch and send data.
 * **Single Page Applications (SPAs)**: SPAs use REST APIs to dynamically load content without requiring a full page refresh.
 * **Integration Between Systems**: Systems within an organization can communicate and share data using REST APIs.
 
-## Example
+**Example**
 
 * **Request**
 ~~~
@@ -119,7 +119,7 @@ While it's not a replacement for REST in all scenarios, it offers a compelling a
 
 **Transport protocol**: HTTP/HTTPS
 
-## Key Concepts and Characteristics
+**Key Concepts and Characteristics**
 
 * **Query Language for APIs**: It allows clients to request the data they need, making it possible to get all required information in a single request.
 
@@ -133,7 +133,7 @@ While it's not a replacement for REST in all scenarios, it offers a compelling a
 
 * **Introspective**: A GraphQL server can be queried for the types it supports. This creates a strong contract between client and server, allowing for tooling and better validation.
 
-## Use Cases
+**Use Cases**
 
 * **Flexible Frontends**: For applications (especially mobile) with crucial bandwidth, you want to minimize the data fetched from the server.
 
@@ -143,7 +143,7 @@ While it's not a replacement for REST in all scenarios, it offers a compelling a
 
 * **Version-Free APIs**: With REST, you often need to version your APIs once changes are introduced. With GraphQL, clients only request the data required, so adding new fields or types doesn't create breaking changes.
 
-## Example
+**Example**
 
 **Request**
 
@@ -177,7 +177,7 @@ GET “/graphql?query=user(id:42){ name role { id name } }”
 
 **Transport protocol**: TCP
 
-## Key Concepts and Characteristics
+**Key Concepts and Characteristics**
 * **Persistent Connection**: Unlike the traditional request-response model, WebSockets provide a full-duplex communication channel that remains open, allowing for real-time data exchange.
 
 * **Upgrade Handshake**: WebSockets start as an HTTP request, which is then upgraded to a WebSocket connection if the server supports it. This is done via the `Upgrade` header.
@@ -192,7 +192,7 @@ GET “/graphql?query=user(id:42){ name role { id name } }”
 
 * **Protocols and Extensions**: WebSockets support subprotocols and extensions, allowing for standardized and custom protocols on top of the base WebSocket protocol.
 
-## Use Cases
+**Use Cases**
 
 * **Online Gaming**: Real-time multiplayer games where players' actions must be immediately reflected to other players.
 
@@ -204,7 +204,7 @@ GET “/graphql?query=user(id:42){ name role { id name } }”
 
 * **Live Feeds**: News websites or social media platforms where new posts or updates are streamed live to users.
 
-## Example
+**Example**
 
 **Request**
 ~~~
@@ -226,7 +226,7 @@ HTTP/1.1 101 Switching Protocols
 
 **Transport protocol**: HTTP/HTTPS
 
-## Key Concepts and Characteristics
+**Key Concepts and Characteristics**
 
 * **Event-Driven**: Webhooks are typically used to denote that an event has occurred. Instead of requesting data at regular intervals, webhooks provide data as it happens, turning the traditional request-response model on its head.
 
@@ -240,7 +240,7 @@ HTTP/1.1 101 Switching Protocols
 
 * **Security**: Since webhooks involve making callbacks to user-defined HTTP endpoints, they can pose security challenges. It's crucial to ensure that the endpoint is secure, the data is validated, and possibly encrypted.
 
-## Use Cases
+**Use Cases**
 
 * **Continuous Integration and Deployment (CI/CD)**: Triggering builds and deployments when code is pushed, or a pull request is merged.
 
@@ -252,7 +252,7 @@ HTTP/1.1 101 Switching Protocols
 
 * **IoT (Internet of Things)**: Devices or sensors can trigger webhooks to notify other systems or services about specific events or data readings.
 
-## Example
+**Example**
 
 **Request**
 ~~~
@@ -280,7 +280,7 @@ GET “https://external-site/webhooks?url=http://site/service-h/api&name=name”
 
 **Transport protocol**: Various
 
-### Key Concepts and Characteristics
+#**Key Concepts and Characteristics**
 * **Definition**: RPC allows a program to cause a procedure (subroutine) to execute in another address space (commonly on another computer on a shared network). It's like calling a function performed on a different machine than the caller's.
 
 * **Stubs**: In the context of RPC, stubs are pieces of code generated by tools that allow local and remote procedure calls to appear the same. The client has a stub that looks like the remote procedure, and the server has a stub that unpacks arguments, calls the actual procedure, and then packs the results to send back.
@@ -291,12 +291,12 @@ GET “https://external-site/webhooks?url=http://site/service-h/api&name=name”
 
 * **Tight Coupling**: RPC often requires the client and server to know the procedure being called, its parameters, and its return type.
 
-### Use Cases
+#**Use Cases**
 * **Distributed Systems**: RPC is commonly used in distributed systems where parts of a system are spread across different machines or networks but need to communicate as if they're local.
 
 * **Network File Systems**: NFS (Network File System) is an example of RPCs performing file operations remotely.
 
-### Example
+#**Example**
 
 **Request**
 
@@ -320,7 +320,7 @@ GET “https://external-site/webhooks?url=http://site/service-h/api&name=name”
 
 **Transport protocol**: HTTP/2
 
-### Key Concepts and Characteristics
+#**Key Concepts and Characteristics**
 * **Definition**: gRPC is an open-source RPC framework developed by Google. It uses HTTP/2 for transport, Protocol Buffers (Protobuf) as the interface description language, and provides authentication, load balancing features, and more.
 
 * **Protocol Buffers**: This is a language-neutral, platform-neutral, extensible mechanism for serializing structured data. With gRPC, you define service methods and message types using Protobuf.
@@ -335,7 +335,7 @@ GET “https://external-site/webhooks?url=http://site/service-h/api&name=name”
 
 * **Language Neutral**: Like RPC, gRPC is language agnostic. However, with Protobuf and the gRPC tooling, generating client and server code in multiple languages is easy.
 
-### Use Cases
+#**Use Cases**
 
 * **Microservices**: gRPC is commonly used in microservices architectures due to its performance characteristics and ability to define service contracts easily.
 
@@ -343,7 +343,7 @@ GET “https://external-site/webhooks?url=http://site/service-h/api&name=name”
 
 * **Mobile Clients**: gRPC's performance benefits and streaming capabilities make it a good fit for mobile clients communicating with backend services.
 
-### Example
+#**Example**
 ~~~ java
 message User {
   int id = 1
@@ -366,7 +366,7 @@ service UserService {
 
 **Transport protocol**: HTTP/HTTPS, JMS, SMTP, and more
 
-## Key Concepts and Characteristics
+**Key Concepts and Characteristics**
 
 * **XML-Based**: SOAP messages are formatted in XML and contain the following elements:
 
@@ -387,7 +387,7 @@ service UserService {
 * **Built-in Error Handling**: The Fault element in a SOAP message is used for error reporting.
 
 * **Standardized**: Operates based on well-defined standards, including the SOAP specification itself, as well as related standards like WS-ReliableMessaging for ensuring message delivery, WS-Security for message security, and more.
-## Use Cases
+**Use Cases**
 * **Enterprise Applications**: SOAP is often used in enterprise settings due to its robustness, extensibility, and ability to traverse firewalls and proxies.
 
 * **Web Services**: Many web services, especially older ones, use SOAP. This includes services offered by major companies like Microsoft and IBM.
@@ -395,7 +395,7 @@ service UserService {
 * **Financial Transactions**: SOAP's built-in security and extensibility make it a good choice for financial transactions, where data integrity and security are paramount.
 
 * **Telecommunications**: Telecom companies might use SOAP for processes like billing, where different systems must communicate reliably.
-## Example
+**Example**
 Request
 ~~~ xml
 <?xml version="1.0"?>
