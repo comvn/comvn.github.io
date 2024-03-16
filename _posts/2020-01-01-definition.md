@@ -1,16 +1,14 @@
 ---
 layout:     post
-title:      Khái niệm - Definition
+title:      Một số khái niệm về System Design
 subtitle:   
 author:     NDA
-header-img: img/posts/design_systems_featured.jpg
-header-mask: 0.6
+header-img: img/bg/bg-min.png
+header-mask: 0.5
 catalog:    true
 tags:
     - System Design
 ---
-
-https://intech.vietnamworks.com/article/16-khai-niem-design-system-toi-uoc-minh-da-biet-truoc-khi-tham-gia-phong-van
 
 >**System Design** (thiết kế hệ thống) là quá trình xác định được kiểu kiến trúc (**architecture**), thành phần (**module**), giao diện (**interfaces**) và dữ liệu (**data**) cho một hệ thống để đáp ứng được một tập yêu cầu cụ thể (**specified requirements**). \
 \
