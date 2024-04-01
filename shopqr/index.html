@@ -752,7 +752,7 @@
 	//build qr code string
 	var QR_TYPE = {
 		STATIC: '11',
-		DYNAMIC: '12'
+		DYNAMIC: '11'
 	};
 
 	var INSTRUMENT_TYPE = {
@@ -1121,6 +1121,7 @@ async function crimg(url) {
   let myPromise = new Promise(r => { 
         let i = new Image(); 
         i.setAttribute('crossorigin', 'anonymous'); 
+        i.crossOrigin = "Anonymous";
         i.setAttribute('width', '360'); 
         i.setAttribute('height', '360'); 
         i.onload = (() => r(i)); 
@@ -1256,7 +1257,7 @@ function genLink(customer)
 	
     //TODO no api
 	//let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + item_qr + "&chs=355x355&choe=UTF-8&chld=L|0";
-    let linkqr = "https://qrcode.tec-it.com/API/QRCode?data=" + item_qr;
+    let linkqr = "https://qrcode.tec-it.com/API/QRCode?size=small&data=" + item_qr;
 
 	console.log(linkqr);
 	var standee = getTemplate('0');
@@ -1365,7 +1366,7 @@ let qr_standee_template_define = [
     "url": "https://www.nguyenda.com/shopqr/khung_qr_new.png",
 	"width" : 481,
 	"height" : 670,
-    "qr_offset": { "x" : 60, "y" : 90},
+    "qr_offset": { "x" : 66, "y" : 90},
 	"shop_offset": { "x" : 240, "y" : 65},
 	"name_offset": { "x" : 240, "y" : 580},
 	"acc_offset": { "x" : 240, "y" : 625},
