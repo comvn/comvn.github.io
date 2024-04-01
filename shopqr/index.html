@@ -1,0 +1,1407 @@
+<!doctype html>
+<html>
+<meta charset="utf-8" />
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	<title>ShopQR Standee Generate v3.11.23.14.12</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script type="text/javascript" src="ethereumjs-tx-1.3.3.min.js"></script>
+</head>
+<style>
+	body{margin: 0;}
+	h1{color:#fff;margin:0;line-height:2;padding-left:20px;}
+	table {
+	  border-collapse: collapse;
+	  width: 100%;
+	}
+
+	th, td {
+	  padding: 8px;
+	  text-align: left;
+	  border: 1px solid #DDD;
+	}
+
+	tr:hover {background-color: #eee;}
+	.top-secondary {
+		position: relative;
+		background: linear-gradient(90deg,#015aad,#00b74f);
+		display:flex;
+		padding:10px;
+	}
+	#app
+	{
+		padding:10px;
+	}
+</style>
+<body>
+<div class="top-secondary" animation-type="fadeInUp">
+	
+	<img height="60" src="https://www.vpbank.com.vn/-/media/vpbank-latest/6all/icon/toolbar/logo_150x37-01.svg" ></img>
+	<h1>
+		VPBank NEO Shop QR v2
+	</h1>
+</div>
+<div id="app">
+	Chọn file csv upload:
+	<form id="csvForm">
+		<input type="file" id="csvInput" accept=".csv" />
+	</form>
+
+	<p id="note"></p>
+	
+	<button id="btndownload" type="button" onClick="return startGenerateImg()">Tạo ảnh</button>
+
+	<a id="downloadLink" href="#" style="display:none">Tải toàn bộ ảnh (zip)</a>
+	<p id="note"></p>
+	<div id="container"></div>
+	<div style="display: none;">
+		<canvas id="myCanvas" width="481" height="670">
+		Your browser does not support the HTML5 canvas tag.</canvas>
+	<div>
+
+		Excel to csv unicode https://products.aspose.app/cells/conversion/excel-to-csv
+</div>
+
+<script>
+	const fileUpload = document.querySelector("#csvInput");
+	fileUpload.addEventListener("change", (event) => {
+		const { files } = event.target;
+		
+		//console.log("file", files);
+
+		const file = event.target.files[0];
+
+		const reader = new FileReader();
+
+		reader.onload = function (e) {
+			const csvArray = csvToArr(e.target.result, ",");
+			//console.log(JSON.stringify(csvArray, null, 4));
+
+			default_data = csvArray;
+			customers = default_data;
+			
+			crCustTableData();
+		};
+
+		reader.readAsText(file);
+	})
+
+	function csvToArr(stringVal, splitter) {
+		const [keys, ...rest] = stringVal
+			.trim()
+			.split("\r\n")
+			.map((item) => item.split(splitter));
+
+		const formedArr = rest.map((item) => {
+			const object = {};
+			keys.forEach((key, index) => (object[key] = item.at(index)));
+			return object;
+		});
+		return formedArr;
+	}
+</script>
+
+<script type="text/javascript">
+	/*
+	 * Implementation to calculate the CRC value for a given string / string of bytes.
+	 * Sunshine, May 2k15
+	 * www.sunshine2k.de || www.bastian-molkenthin.de
+	 */
+	"use strict";
+
+	/*
+	 * String utility functions
+	 */
+	var StringUtil = function () {
+		if (StringUtil.prototype._singletonInstance) {
+			return StringUtil.prototype._singletonInstance;
+		}
+		StringUtil.prototype._singletonInstance = this;
+
+		/*
+		 * Converts a string into an array of bytes.
+		 * This is not really correct as an character (unicode!) does not always fit into a byte, so the
+		 * character value might be cut!
+		 */
+		this.getCharacterByteArrayFromString = function (str) {
+			var i, charVal;
+			var bytes = [];
+			for (i = 0; i < str.length; i++) {
+				charVal = str.charCodeAt(i);
+				if (charVal < 256) {
+					bytes[i] = str.charCodeAt(i);
+				}
+			}
+			return bytes;
+		};
+
+		/*
+		 * Get the given number as hexadecimal string
+		 */
+		this.getNumberAsHexStr = function (num) {
+			var tempStr = num.toString(16).toUpperCase();
+			return ("0x" + tempStr);
+		}
+
+		this.getNumberAsHexStr = function (num, widthInBits) {
+			var tempStr = num.toString(16).toUpperCase();
+			while (tempStr.length < (widthInBits >> 2)) {
+				tempStr = '0' + tempStr;
+			}
+			return ("0x" + tempStr);
+		}
+
+		/*
+		 * Get the given 32bit number as hexadecimal string
+		 */
+		this.getNumberAsHexStr32 = function (num) {
+			var valueHigh = num >>> 16;
+			var valueLow = num & 0x0000FFFF;
+			return ("0x" + valueHigh.toString(16).toUpperCase() + valueLow.toString(16).toUpperCase());
+		}
+
+		this.getNumberAsHexStr32FixedWidth = function (num) {
+			var valueHigh = num >>> 16;
+			valueHigh = valueHigh.toString(16).toUpperCase()
+			while (valueHigh.length < 4) {
+				valueHigh = '0' + valueHigh;
+			}
+
+			var valueLow = num & 0x0000FFFF;
+			valueLow = valueLow.toString(16).toUpperCase()
+			while (valueLow.length < 4) {
+				valueLow = '0' + valueLow;
+			}
+
+			return ("0x" + valueHigh + valueLow);
+		}
+
+		var lastErrToken;
+		/*
+		 * Get value of token where a call to getCharacterByteArrayFromByteString might have failed. */
+		this.getLastErrorToken = function () {
+			return lastErrToken;
+		}
+
+		/*
+		 * Converts a string of byte values into an array of bytes.
+		 * Returns undefined if an errors occurs. The erroneous token can be retrieved by getLastErrorToken().
+		 */
+		this.getCharacterByteArrayFromByteString = function (str) {
+			var bytes = [];
+			var bytePos = 0;
+			var splitStr = str.split(/\s+/);
+			for (var i = 0; i < splitStr.length; i++) {
+				var byteStr = splitStr[i];
+				if (byteStr.substr(0, 2) === "0x") {
+					byteStr = byteStr.substr(2, byteStr.length - 2);
+				}
+
+				if (byteStr === " " || byteStr === "")
+					continue;
+
+				var b = parseInt(byteStr, 16);
+				if (b === NaN || b === undefined) {
+					lastErrToken = byteStr;
+					return undefined;
+				}
+				else {
+					if (b < 256) {
+						bytes[bytePos] = b;
+						bytePos++;
+					}
+					else {
+						lastErrToken = byteStr;
+						return undefined;
+					}
+
+				}
+			}
+			return bytes;
+		}
+
+		this.isBinaryString = function (s) {
+			for (var i = 0; i < s.length; i++) {
+				if (!(s[i] == '0' || s[i] == '1'))
+					return false;
+			}
+			return true;
+		};
+
+		/*
+		 * Converts a binary string, consisting of 0 and 1, to a numerical byte array.
+		 * Each eight binary digits (forming a byte) must be separated by a space.
+		 * Example: 10000100 11110001 represents byte array 0x84 0xF1
+		 */
+		this.getCharacterByteArrayFromBinaryString = function (str) {
+			var bytes = [];
+			var parts = str.split(/\s+/);
+			for (var strIdx = 0; strIdx < parts.length; strIdx++) {
+				var strPart = parts[strIdx];
+				if (strPart === "") continue;
+				while (strPart.length < 8) {
+					strPart = '0' + strPart;
+				}
+				if (!(new StringUtil().isBinaryString(strPart))) {
+					lastErrToken = strPart;
+					return undefined;
+				}
+				var num = 0;
+				for (var i = 0; i < 8; i++) {
+					if (strPart[i] == '1') {
+						num = num + (1 << (7 - i));
+					}
+				}
+				bytes.push(num);
+			}
+			return bytes;
+		}
+
+	};
+
+	var UInt64 = (function () {
+		function UInt64(numOrUint64, lowVal) {
+			if (typeof numOrUint64 === 'number') {
+				this.highVal = numOrUint64 & 0xFFFFFFFF;
+				this.lowVal = lowVal & 0xFFFFFFFF;
+			}
+			else {
+				this.highVal = numOrUint64.highVal;
+				this.lowVal = numOrUint64.lowVal;
+			}
+		}
+
+		UInt64.prototype.clone = function () {
+			return new UInt64(this);
+		};
+
+		UInt64.FromString = function (strHigh, strLow) {
+			var numHigh = 0, numLow = 0;
+			if (strLow == undefined) {
+				/* the first parameter string contains the whole number */
+				/* remove preceeding '0x' prefix */
+				if (strHigh.substr(0, 2) === "0x") {
+					strHigh = strHigh.substr(2, strHigh.length - 2);
+				}
+				/* pad to full 16 digits */
+				while (strHigh.length < 16) {
+					strHigh = '0' + strHigh;
+				}
+				numHigh = parseInt(strHigh.substr(0, 8), 16);
+				numLow = parseInt(strHigh.substr(8, 15), 16);
+			}
+			else {
+				/* two 32bit numbers are provided */
+				/* handle high part */
+				/* remove preceeding '0x' prefix */
+				if (strHigh.substr(0, 2) === "0x") {
+					strHigh = strHigh.substr(2, strHigh.length - 2);
+				}
+				/* pad to full 8 digits */
+				while (strHigh.length < 8) {
+					strHigh = '0' + strHigh;
+				}
+				numHigh = parseInt(strHigh, 16);
+				/* handle low part */
+				/* remove preceeding '0x' prefix */
+				if (strLow.substr(0, 2) === "0x") {
+					strLow = strLow.substr(2, strLow.length - 2);
+				}
+				/* pad to full 8 digits */
+				while (strLow.length < 8) {
+					strLow = '0' + strLow;
+				}
+				numLow = parseInt(strLow, 16);
+			}
+			return new UInt64(numHigh, numLow);
+		};
+
+		UInt64.prototype.and = function (otherUInt64OrNumber) {
+			if (typeof otherUInt64OrNumber === 'number') {
+				this.highVal = 0;
+				this.lowVal = this.lowVal & otherUInt64OrNumber;
+			}
+			else {
+				this.highVal = this.highVal & otherUInt64OrNumber.highVal;
+				this.lowVal = this.lowVal & otherUInt64OrNumber.lowVal;
+			}
+			return this;
+		};
+
+		UInt64.prototype.shl = function (dist) {
+			for (var i = 0; i < dist; i++) {
+				this.highVal = this.highVal << 1;
+				if ((this.lowVal & 0x80000000) != 0) {
+					this.highVal |= 0x01;
+				}
+				this.lowVal = this.lowVal << 1;
+			}
+			return this;
+		};
+		UInt64.prototype.shr = function (dist) {
+			for (var i = 0; i < dist; i++) {
+				this.lowVal = this.lowVal >>> 1;
+				if ((this.highVal & 0x00000001) != 0) {
+					this.lowVal |= 0x80000000;
+				}
+				this.highVal = this.highVal >>> 1;
+			}
+			return this;
+		};
+
+		UInt64.prototype.isZero = function () {
+			return ((this.highVal == 0) && (this.lowVal == 0));
+		};
+
+		UInt64.prototype.xor = function (otherUInt64) {
+			this.highVal = this.highVal ^ otherUInt64.highVal;
+			this.lowVal = this.lowVal ^ otherUInt64.lowVal;
+			return this;
+		};
+
+		UInt64.prototype.reflect = function () {
+			var newHighVal = 0, newLowVal = 0;
+			for (var i = 0; i < 32; i++) {
+				if ((this.highVal & (1 << (31 - i))) != 0) {
+					newLowVal |= (1 << i);
+				}
+				if ((this.lowVal & (1 << i)) != 0) {
+					newHighVal |= (1 << (31 - i));
+				}
+			}
+			this.lowVal = newLowVal;
+			this.highVal = newHighVal;
+			return this;
+		};
+
+		UInt64.prototype.toHexString = function () {
+			var str = "";
+			var stringUtil = new StringUtil();
+			str += stringUtil.getNumberAsHexStr32FixedWidth(this.highVal);
+			str += (stringUtil.getNumberAsHexStr32FixedWidth(this.lowVal).substring(2, 10));
+			return str;
+		};
+		UInt64.prototype.asNumber = function () {
+			return ((this.highVal << 32) | this.lowVal);
+		};
+		return UInt64;
+	})();
+
+	/*
+	 * Struct to contain one instance of a CRC algorithm model */
+	function CrcModel(width, name, polynomial, initial, finalXor, inputReflected, resultReflected) {
+		this.width = width
+		this.name = name;
+
+		if (width == 64) {
+			
+			this.polynomial = UInt64.FromString(polynomial);
+			this.initial = UInt64.FromString(initial);
+			this.finalXor = UInt64.FromString(finalXor);
+		}
+		else {
+			this.polynomial = polynomial;
+			this.initial = initial;
+			this.finalXor = finalXor;
+		}
+		this.inputReflected = inputReflected;
+		this.resultReflected = resultReflected;
+	}
+
+	/* Known CRC algorihtms */
+	var CrcDatabase = [
+	   
+		new CrcModel(16, "CRC16_CCITT_FALSE", 0x1021, 0xFFFF, 0x0000, false, false),
+		
+
+	];
+
+
+	/* two constructors supported:
+		- new Crc(width, polynomial, initialVal, finalXorVal, inputReflected, resultReflected)
+		- new Crc(width, crcModel)
+	*/
+	var Crc = function (width, polynomial, initialVal, finalXorVal, inputReflected, resultReflected) {            
+		/* private variables */
+		// crc model variables
+		var width;
+		var polynomial;
+		var initialVal;
+		var finalXorVal;
+		var inputReflected;
+		var resultReflected;
+
+		var crcTable;       // lookup table
+		var castMask;
+		var msbMask;
+
+		/* 'constructor' */
+		if (arguments.length == 2 && typeof arguments[1] === "object") {
+			width = arguments[0];
+			polynomial = arguments[1].polynomial;
+			initialVal = arguments[1].initial;
+			finalXorVal = arguments[1].finalXor;
+			inputReflected = arguments[1].inputReflected;
+			resultReflected = arguments[1].resultReflected;
+		}
+		else if (arguments.length == 6) {
+			width = arguments[0];
+			polynomial = arguments[1];
+			initialVal = arguments[2];
+			finalXorVal = arguments[3];
+			inputReflected = arguments[4];
+			resultReflected = arguments[5];
+		}
+		else {
+			new Error("Invalid arguments");
+		}
+
+		switch (width)
+		{
+			case 8: castMask = 0xFF; break;
+			case 16: castMask = 0xFFFF; break;
+			case 32: castMask = 0xFFFFFFFF; break;
+			case 64: castMask = new UInt64(0xFFFFFFFF, 0xFFFFFFFF); break;
+			default: throw "Invalid CRC width"; break;
+		}
+		if (width == 64) {
+			msbMask = new UInt64(0x80000000, 0x00000000);
+		}
+		else {
+			msbMask = 0x01 << (width - 1);
+		}
+		/* 'constructor' END */
+
+		this.calcCrcTable = function ()
+		{
+			crcTable = new Array(256);
+
+			if (width == 64) {
+				for (var divident = 0; divident < 256; divident++) {
+					var currByte = new UInt64(0, divident);
+					currByte.shl(56).and(castMask);
+					for (var bit = 0; bit < 8; bit++) {
+						if (!(new UInt64(currByte).and(msbMask).isZero())) {
+							currByte.shl(1);
+							currByte.xor(polynomial);
+						}
+						else {
+							currByte.shl(1);
+						}
+					}
+					crcTable[divident] = currByte.and(castMask);
+				}
+			}
+			else {
+				for (var divident = 0; divident < 256; divident++) {
+					var currByte = (divident << (width - 8)) & castMask;
+					for (var bit = 0; bit < 8; bit++) {
+						if ((currByte & msbMask) != 0) {
+							currByte <<= 1;
+							currByte ^= polynomial;
+						}
+						else {
+							currByte <<= 1;
+						}
+					}
+					crcTable[divident] = (currByte & castMask);
+				}
+			}
+		}
+
+		this.calcCrcTableReversed = function ()
+		{
+			crcTable = new Array(256);
+
+			if (width == 64) {
+				for (var divident = 0; divident < 256; divident++) {
+					var reflectedDivident = new CrcUtil().Reflect8(divident);
+
+					var currByte = new UInt64(0, reflectedDivident);
+					currByte.shl(56).and(castMask);
+
+					for (var bit = 0; bit < 8; bit++) {
+						if (!(new UInt64(currByte).and(msbMask).isZero())) {
+							currByte.shl(1);
+							currByte.xor(polynomial);
+						}
+						else {
+							currByte.shl(1);
+						}
+					}
+
+					currByte = currByte.reflect();
+					crcTable[divident] = currByte.and(castMask);
+				}
+			}
+			else {
+				for (var divident = 0; divident < 256; divident++) {
+					var reflectedDivident = new CrcUtil().Reflect8(divident);
+
+					var currByte = (reflectedDivident << (width - 8)) & castMask;
+
+					for (var bit = 0; bit < 8; bit++) {
+						if ((currByte & msbMask) != 0) {
+							currByte <<= 1;
+							currByte ^= polynomial;
+						}
+						else {
+							currByte <<= 1;
+						}
+					}
+
+					currByte = new CrcUtil().ReflectGeneric(currByte, width);
+
+					crcTable[divident] = (currByte & castMask);
+				}
+			}
+		}
+
+		if (!this.crcTable)
+		{
+			this.calcCrcTable();
+		}
+
+		this.compute = function (bytes)
+		{
+			if (width == 64) {
+				var crc = initialVal.clone();
+				for (var i = 0; i < bytes.length; i++) {
+
+					var curByte = bytes[i] & 0xFF;
+
+					if (inputReflected) {
+						curByte = new CrcUtil().Reflect8(curByte);
+					}
+
+					/* update the MSB of crc value with next input byte */
+					var curByteShifted56 = new UInt64(0, curByte).shl(56);
+					crc.xor(curByteShifted56).and(castMask);
+
+					/* this MSB byte value is the index into the lookup table */
+					var pos = (crc.clone().shr(56)).and(0xFF).asNumber();
+					/* shift out this index */
+					crc.shl(8).and(castMask);
+					/* XOR-in remainder from lookup table using the calculated index */
+					crc.xor(crcTable[pos]).and(castMask);
+				}
+
+				if (resultReflected) {
+					crc.reflect();
+				}
+				return crc.xor(finalXorVal).and(castMask);
+			}
+			else {
+				var crc = initialVal;
+				for (var i = 0; i < bytes.length; i++) {
+
+					var curByte = bytes[i] & 0xFF;
+
+					if (inputReflected) {
+						curByte = new CrcUtil().Reflect8(curByte);
+					}
+
+					/* update the MSB of crc value with next input byte */
+					crc = (crc ^ (curByte << (width - 8))) & castMask;
+					/* this MSB byte value is the index into the lookup table */
+					var pos = (crc >> (width - 8)) & 0xFF;
+					/* shift out this index */
+					crc = (crc << 8) & castMask;
+					/* XOR-in remainder from lookup table using the calculated index */
+					crc = (crc ^ crcTable[pos]) & castMask;
+				}
+
+				if (resultReflected) {
+					crc = new CrcUtil().ReflectGeneric(crc, width);
+				}
+				return ((crc ^ finalXorVal) & castMask);
+			}
+		}
+
+		this.getLookupTable = function ()
+		{
+			return crcTable;
+		}
+	};
+
+
+	/*
+	 * CRC utility functions to reflect numbers.
+	 */
+	var CrcUtil = function ()
+	{
+		/* singleton */
+		if (CrcUtil.prototype._singletonInstance)
+		{
+			return CrcUtil.prototype._singletonInstance;
+		}
+		CrcUtil.prototype._singletonInstance = this;
+
+		this.Reflect8 = function(val)
+		{
+			var resByte = 0;
+
+			for (var i = 0; i < 8; i++)
+			{
+				if ((val & (1 << i)) != 0)
+				{
+					resByte |= ( (1 << (7 - i)) & 0xFF);
+				}
+			}
+
+			return resByte;
+		}
+
+		this.Reflect16 = function (val)
+		{
+			var resByte = 0;
+
+			for (var i = 0; i < 16; i++)
+			{
+				if ((val & (1 << i)) != 0)
+				{
+					resByte |= ((1 << (15 - i)) & 0xFFFF);
+				}
+			}
+
+			return resByte;
+		}
+
+		this.Reflect32 = function (val)
+		{
+			var resByte = 0;
+
+			for (var i = 0; i < 32; i++)
+			{
+				if ((val & (1 << i)) != 0)
+				{
+					resByte |= ((1 << (31 - i)) & 0xFFFFFFFF);
+				}
+			}
+
+			return resByte;
+		}
+
+		this.ReflectGeneric = function (val, width)
+		{
+			var resByte = 0;
+
+			for (var i = 0; i < width; i++)
+			{
+				if ((val & (1 << i)) != 0)
+				{
+					resByte |= (1 << ((width-1) - i));
+				}
+			}
+
+			return resByte;
+		}
+	};
+
+	/*
+	 * Get CRC model instance with given CRC width and given index (starting at 0, only counting entries with matching width
+	 */
+	function getDataBaseEntryFromEntry(width, indexToFind)
+	{
+		var curIndex = 0;
+		for (var i = 0; i < CrcDatabase.length; i++)
+		{
+			if (width != CrcDatabase[i].width) continue;
+			if (curIndex == indexToFind)
+			{
+				return CrcDatabase[i];
+			}
+			else
+			{
+				curIndex++;
+			}
+		}
+		throw "Invalid selected index into CRC database";
+	}
+
+
+	function genCRC(inputText)
+	{
+		/* at first get input data */
+		var stringUtil = new StringUtil();
+		var bytes = stringUtil.getCharacterByteArrayFromString(inputText);
+		if (bytes == undefined)
+		{
+			printError("Invalid input data! Erroneous token: " + stringUtil.getLastErrorToken());
+			return;
+		}
+	   
+		/* Predefined CRC selected */
+		/* get selected CRC model parameters */
+		var crcParams = getDataBaseEntryFromEntry(16, 0);
+
+		var crc = new Crc(16, crcParams);
+		var crcValue = crc.compute(bytes);
+		var hexcrc = new StringUtil().getNumberAsHexStr(crcValue);
+
+		var crcstr = hexcrc.substring(2);
+
+		return crcstr;
+	}
+
+
+</script>
+
+<script>
+
+	//build qr code string
+	var QR_TYPE = {
+		STATIC: '11',
+		DYNAMIC: '12'
+	};
+
+	var INSTRUMENT_TYPE = {
+		CARD: 'QRIBFTTC',
+		ACCOUNT: 'QRIBFTTA'
+	}
+	var CRC_ID = '63';
+	var CRC_LENGTH = '04';
+	var ATM_CARD_NUMBER_PREFIX = '9704';
+
+	function genQRText(toAcc, accName, msg, _qrType)
+	{
+		var qrRawData = {
+			qrType: _qrType,
+			bin: '970432',
+			receiverNumber: toAcc,
+			amount: '',
+			orderId: '',
+			description: msg
+		}
+
+		const qrProperties = buildQRProps(qrRawData);
+		
+		const rawQRString = generateRawQRString(qrProperties);
+		const qrContentNoChecksum = rawQRString + CRC_ID + CRC_LENGTH;
+		
+		//console.log('qrContentNoChecksum: ' + qrContentNoChecksum);
+
+		const checksum = genCRC(qrContentNoChecksum);
+		
+		const qrContent = qrContentNoChecksum + checksum.toUpperCase();
+
+		console.log(qrContent);
+		return qrContent;
+	}
+
+	//var qr1 = genQRText('0932388685', 'DAO ANH NGUYEN', 'DAO ANH NGUYEN chuyen tien', '');
+
+	//console.log(qr1);
+
+	function generated() {
+		var qrRawData = {
+			qrType: 'STATIC',
+			bin: '970432',
+			receiverNumber: $('input[name=accountNumber]').val(),
+			amount: null,
+			orderId: '',
+			description: $('input[name=description]').val()
+		}
+
+		const qrProperties = buildQRProps(qrRawData);
+		
+		const rawQRString = generateRawQRString(qrProperties);
+		const qrContentNoChecksum = rawQRString + CRC_ID + CRC_LENGTH;
+
+		const checksum = calculateCRC(qrContentNoChecksum);
+		
+		const qrContent = qrContentNoChecksum + checksum.toUpperCase();
+
+		console.log(qrContent);
+		
+		$("#QRWrapper").html("");
+		new QRCode(document.getElementById("QRWrapper"), {
+			text: qrContent,
+			width: 200,
+			height: 200,
+			colorDark : "#000000",
+			colorLight : "#ffffff",
+			correctLevel : QRCode.CorrectLevel.H
+		});
+		
+		setTimeout(function() {
+			document.getElementById("myCanvas").style.display = 'block';
+			document.getElementById("qrTemp").style.display = 'none';
+			const canvas = document.getElementById("myCanvas");
+			const ctx = canvas.getContext("2d");
+			const template = document.getElementById("template-qr");
+			const qrCode = document.querySelector('#QRWrapper img');
+			
+		
+			ctx.drawImage(template, 0, 0, 400, 500);
+			ctx.drawImage(qrCode, 85, 120, 230, 220);
+			
+			ctx.font = "bold 12px Times New Roman";
+			ctx.fillStyle = "#005aaa";
+			ctx.textAlign = "center";
+			ctx.fillText("Tên chủ TK: " + $('input[name=accountName]').val(), 200, 375);
+			ctx.fillText("Số TK: " + qrRawData.receiverNumber, 200, 395);
+		}, 100);
+		
+	}
+
+	function isBankCard(receiverNumber = '') {
+		return receiverNumber.startsWith(ATM_CARD_NUMBER_PREFIX) && (receiverNumber.length === 16 || receiverNumber.length === 19);
+	}
+
+	function buildQRProps({ qrType, bin, receiverNumber, amount, orderId, description }) {
+		var qrProperties = {
+			payloadFormatIndicator: {
+				id: '00',
+				value: '01'
+			},
+			pointOfInitiationMethod: {
+				id: '01',
+				value: QR_TYPE[qrType]
+			},
+			merchantAccountInformation: {
+				id: '38',
+				value: {
+					guid: {
+					id: '00',
+					value: 'A000000727'
+				},
+				paymentNetwork: {
+						id: '01',
+						value: {
+							beneficiaryId: {
+							id: '00',
+							value: bin
+						},
+						receiverNumber: {
+							id: '01',
+							value: receiverNumber
+						}
+					}
+				},
+				servicesCode: {
+					id: '02',
+					value: isBankCard(receiverNumber) ? INSTRUMENT_TYPE.CARD : INSTRUMENT_TYPE.ACCOUNT
+				}
+			}
+		},
+		transactionCurrency: {
+			id: '53',
+			value: '704'
+		},
+		transactionAmount: {
+			id: '54',
+			value: amount
+		},
+		countryCode: {
+			id: '58',
+			value: 'VN'
+		},
+		additionalDataFieldTemplate: {
+			id: '62',
+			value: {
+				order: {
+					id: '01',
+					value: orderId
+				},
+				purposeOfTx: {
+					id: '08',
+					value: description
+				}
+			}
+		}
+		};
+		
+		return qrProperties;
+	}
+
+	function generateRawQRString (objProps) {
+		let result = '';
+		Object.values(objProps).forEach(prop => {
+			if (!prop.value) return '';
+			const isObject = (typeof prop.value === 'object');
+			const valueString = isObject ? generateRawQRString(prop.value) : String(prop.value);
+			if (valueString) {
+				result += prop.id;
+				result += valueString.length.toString().padStart(2, '0')
+				result += valueString
+			}
+		})
+		
+		return result;
+	}
+
+	function calculateCRC(data) {
+		// Convert data to buffer
+		var buffer = ethereumjs.Buffer.Buffer.from(data,'utf8');
+		// Calculate the CRC
+		var result = crc16ccitt(buffer, 0xffff);
+		// Convert the CRC to hex string
+		return result.toString(16).padStart(4, '0');
+	}
+
+	var TABLE = [
+	0x0000, 0x1021, 0x2042, 0x3063, 0x4084, 0x50a5, 0x60c6, 0x70e7, 
+	0x8108, 0x9129, 0xa14a, 0xb16b, 0xc18c, 0xd1ad, 0xe1ce, 0xf1ef, 
+	0x1231, 0x0210, 0x3273, 0x2252, 0x52b5, 0x4294, 0x72f7, 0x62d6, 
+	0x9339, 0x8318, 0xb37b, 0xa35a, 0xd3bd, 0xc39c, 0xf3ff, 0xe3de, 
+	0x2462, 0x3443, 0x0420, 0x1401, 0x64e6, 0x74c7, 0x44a4, 0x5485, 
+	0xa56a, 0xb54b, 0x8528, 0x9509, 0xe5ee, 0xf5cf, 0xc5ac, 0xd58d, 
+	0x3653, 0x2672, 0x1611, 0x0630, 0x76d7, 0x66f6, 0x5695, 0x46b4, 
+	0xb75b, 0xa77a, 0x9719, 0x8738, 0xf7df, 0xe7fe, 0xd79d, 0xc7bc, 
+	0x48c4, 0x58e5, 0x6886, 0x78a7, 0x0840, 0x1861, 0x2802, 0x3823, 
+	0xc9cc, 0xd9ed, 0xe98e, 0xf9af, 0x8948, 0x9969, 0xa90a, 0xb92b, 
+	0x5af5, 0x4ad4, 0x7ab7, 0x6a96, 0x1a71, 0x0a50, 0x3a33, 0x2a12, 
+	0xdbfd, 0xcbdc, 0xfbbf, 0xeb9e, 0x9b79, 0x8b58, 0xbb3b, 0xab1a, 
+	0x6ca6, 0x7c87, 0x4ce4, 0x5cc5, 0x2c22, 0x3c03, 0x0c60, 0x1c41, 
+	0xedae, 0xfd8f, 0xcdec, 0xddcd, 0xad2a, 0xbd0b, 0x8d68, 0x9d49, 
+	0x7e97, 0x6eb6, 0x5ed5, 0x4ef4, 0x3e13, 0x2e32, 0x1e51, 0x0e70, 
+	0xff9f, 0xefbe, 0xdfdd, 0xcffc, 0xbf1b, 0xaf3a, 0x9f59, 0x8f78, 
+	0x9188, 0x81a9, 0xb1ca, 0xa1eb, 0xd10c, 0xc12d, 0xf14e, 0xe16f, 
+	0x1080, 0x00a1, 0x30c2, 0x20e3, 0x5004, 0x4025, 0x7046, 0x6067, 
+	0x83b9, 0x9398, 0xa3fb, 0xb3da, 0xc33d, 0xd31c, 0xe37f, 0xf35e, 
+	0x02b1, 0x1290, 0x22f3, 0x32d2, 0x4235, 0x5214, 0x6277, 0x7256, 
+	0xb5ea, 0xa5cb, 0x95a8, 0x8589, 0xf56e, 0xe54f, 0xd52c, 0xc50d, 
+	0x34e2, 0x24c3, 0x14a0, 0x0481, 0x7466, 0x6447, 0x5424, 0x4405, 
+	0xa7db, 0xb7fa, 0x8799, 0x97b8, 0xe75f, 0xf77e, 0xc71d, 0xd73c, 
+	0x26d3, 0x36f2, 0x0691, 0x16b0, 0x6657, 0x7676, 0x4615, 0x5634, 
+	0xd94c, 0xc96d, 0xf90e, 0xe92f, 0x99c8, 0x89e9, 0xb98a, 0xa9ab, 
+	0x5844, 0x4865, 0x7806, 0x6827, 0x18c0, 0x08e1, 0x3882, 0x28a3, 
+	0xcb7d, 0xdb5c, 0xeb3f, 0xfb1e, 0x8bf9, 0x9bd8, 0xabbb, 0xbb9a, 
+	0x4a75, 0x5a54, 0x6a37, 0x7a16, 0x0af1, 0x1ad0, 0x2ab3, 0x3a92, 
+	0xfd2e, 0xed0f, 0xdd6c, 0xcd4d, 0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 
+	0x7c26, 0x6c07, 0x5c64, 0x4c45, 0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 
+	0xef1f, 0xff3e, 0xcf5d, 0xdf7c, 0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 
+	0x6e17, 0x7e36, 0x4e55, 0x5e74, 0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
+	];
+
+	function crc16ccitt (current, previous) {
+		let crc = typeof previous !== 'undefined' ? ~~previous : 0xffff;
+
+		for (let index = 0; index < current.length; index++) {
+			crc = (TABLE[((crc >> 8) ^ current[index]) & 0xff] ^ (crc << 8)) & 0xffff;
+		}
+
+		return crc;
+	};
+
+</script>
+
+<script>
+
+const DELAY = 500;
+
+var files = [];
+var process = 0;
+var customers;
+var zip_filename;
+var c = document.getElementById("myCanvas");
+var ctx = c.getContext('2d');
+var img_vietQR;
+var img_napas247;
+var img_bg;
+
+const base64 = {
+	decode: s => decodeURIComponent(escape(window.atob( s ))),
+	encode: b => window.btoa(unescape(encodeURIComponent( b )))
+};
+
+window.onload = function()
+{
+	/*
+	const urlParams = new URLSearchParams(window.location.search);
+	const param = urlParams.get('p');
+	if(!param)
+	{
+		document.getElementById('note').innerText = 'Không có dữ liệu';
+		return;
+	}
+
+	var decode = base64.decode(param);
+	
+	var json = JSON.parse(decode);
+	customers = json.d;
+	zip_filename = json.key;
+	crCustTableData(customers);
+	*/
+
+	zip_filename = "qr_400";
+
+	img_vietQR = loadsync("https://www.nguyenda.com/shopqr/logo-vietqr_170.png");
+	img_napas247 = loadsync("https://www.nguyenda.com/shopqr/napas247_180.png");
+	img_bg = loadsync("https://www.nguyenda.com/shopqr/khung_qr_new.png");
+	//console.log(img_vietQR);
+	//console.log(default_data);
+	crCustTableData();
+	
+};
+
+</script>
+
+<script>
+
+function crCustTempTable()
+{
+	const newTable = document.createElement("table");
+	newTable.id = 'tblCust';
+	
+	var thead = '';
+	
+	thead = '<thead>';
+	thead += '<th>Thứ tự</th>';
+	thead += '<th>Tên tài khoản</th>';
+	thead += '<th>Số tài khoản</th>';
+	thead += '<th>Shop code</th>';
+	thead += '<th>Tên shop</th>';
+	thead += '<th>Tải file</th>';
+	thead += '</thead>';
+
+	//console.log(thead);
+	
+	newTable.innerHTML = thead;
+
+	const target = document.getElementById('container');
+	target.appendChild(newTable);
+}
+
+function crCustTableData()
+{
+
+	if(!customers)
+	{
+		document.getElementById('note').innerText = 'Không có dữ liệu';
+		return;
+	}
+	document.getElementById('note').innerText = 'Có ' + customers.length + ' yêu cầu in mã QR để bàn';
+	
+	//create table template
+	var tbl = document.getElementById('tblCust');
+	if(!tbl)
+	{
+		crCustTempTable();
+		tbl = document.getElementById('tblCust');
+	}
+	
+
+	while( tbl.rows.length > 1) tbl.rows[1].remove();
+
+	for(cust of customers) {
+		if(!cust.CUSTOMER_NAME)
+			continue;
+
+		const tr = document.createElement("tr");
+		tr.id = 'tr_' + cust.STT;
+		const tdIdx = document.createElement("td");
+		const tdName = document.createElement("td");
+		const tdAcc = document.createElement("td");
+		const tdShopCode = document.createElement("td");
+		const tdShopName = document.createElement("td");
+		const tdLast = document.createElement("td");
+		tdLast.id = 'link_' + cust.STT;
+		
+		tdIdx.textContent = cust.STT;
+		tdName.textContent = cust.CUSTOMER_NAME;
+		tdAcc.textContent = cust.ACCTNO;
+		tdShopCode.textContent = cust.SHOP_CODE;
+		tdShopName.textContent = cust.SHOP_NAME;
+		
+		tr.appendChild(tdIdx);
+		tr.appendChild(tdName);
+		tr.appendChild(tdAcc);
+		tr.appendChild(tdShopCode);
+		tr.appendChild(tdShopName);
+		tr.appendChild(tdLast);
+	
+		tbl.appendChild(tr);
+	}
+}
+
+async function crimg(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let myPromise = new Promise(r => { 
+        let i = new Image(); 
+        i.setAttribute('crossorigin', 'anonymous'); 
+        i.setAttribute('width', '360'); 
+        i.setAttribute('height', '360'); 
+        i.onload = (() => r(i)); 
+        i.src = url; 
+    });
+  
+  return await myPromise;
+}
+
+function loadsync(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let i = new Image(); 
+  i.setAttribute('crossorigin', 'anonymous'); 
+  i.onload = (() => r(i)); 
+  i.src = url; 
+  
+  return i;
+}
+
+async function crimg(url) {
+  //return new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = //(() => r(i)); i.src = url; });
+  let myPromise = new Promise(r => { let i = new Image(); i.setAttribute('crossorigin', 'anonymous'); i.onload = (() => r(i)); i.src = url; });
+  
+  return await myPromise;
+}
+
+function load(url) {
+  return crimg(url);
+}
+
+function genLinks(custs)
+{
+	for(cust of custs){
+		//TODO delay
+	    genLink(cust);
+	}
+}
+
+function genQRTextItem(customer)
+{
+	var accNo = customer.ACCTNO;
+	var accName = customer.CUSTOMER_NAME;
+	var shopCode = customer.SHOP_CODE;
+	var shopName = customer.SHOP_NAME;
+	var content = shopCode ? shopCode + ' ' : '';
+	content +=  accName + ' chuyen tien';
+
+	var _qrType = shopCode ? 'DYNAMIC' : 'STATIC';
+
+	var customer_qr_text = genQRText(accNo, accName, content, _qrType);
+	return customer_qr_text;
+}
+
+async function genBg1()
+{
+	ctx.beginPath();
+
+	var rectX = 2;
+	var rectY = 2;
+	var rectWidth = 481;
+	var rectHeight = 680;
+	var cornerRadius = 20;
+	var lineWidth = 5;
+
+	// Draw inner filled white rectangle
+	ctx.beginPath();
+	ctx.fillStyle = "white";
+	ctx.roundRect(rectX, rectY, rectWidth - 5, rectHeight - 15, cornerRadius);
+	//ctx.fillRect(20, 20, 150, 100);
+	ctx.fill();
+
+	ctx.beginPath();
+
+	// Create a Gradient
+	const grd = ctx.createLinearGradient(rectX, rectY, rectWidth, 0);
+	grd.addColorStop(0, "#1e4283");
+	grd.addColorStop(1, "#2ab14e");
+
+	// Draw a filled Rectangle
+	//ctx.fillStyle = grd;
+	ctx.strokeStyle = grd;
+	ctx.lineWidth = lineWidth;
+	ctx.roundRect(rectX, rectY, rectWidth - 4, rectHeight - 14, cornerRadius);
+	//ctx.fillRect(20, 20, 150, 100);
+	//ctx.fill();
+	ctx.stroke();
+
+	// Draw line
+
+	ctx.beginPath();
+	ctx.moveTo(1, rectHeight - 145);
+	ctx.lineTo(rectWidth, rectHeight - 145);
+
+	ctx.stroke();
+
+	// |
+
+	ctx.beginPath();
+	ctx.lineWidth = 1;
+	ctx.strokeStyle = "Gray";
+	ctx.moveTo(rectWidth / 2, rectHeight - 215);
+	ctx.lineTo(rectWidth / 2, rectHeight - 165);
+
+	ctx.stroke();
+
+	// vietQR
+	
+	ctx.drawImage(img_vietQR, 50, rectHeight - 215);
+
+	// napas247
+	
+	ctx.drawImage(img_napas247, 270, rectHeight - 205);
+
+}
+
+async function genBg()
+{
+	//create image qr standee
+		//let img_standee_template = await load(standee.url);
+
+	ctx.drawImage(img_bg, 0, 0);
+}
+
+
+function genLink(customer)
+{
+	if(!customer.CUSTOMER_NAME)
+		return;
+
+	var fileName = customer.STT + "_" + customer.CUSTOMER_NAME.replaceAll(" ","_") + "_qr_standee.png";
+
+	var item_qr = genQRTextItem(customer);
+	
+    //TODO no api
+	//let linkqr = "https://chart.googleapis.com/chart?cht=qr&chl=" + item_qr + "&chs=355x355&choe=UTF-8&chld=L|0";
+    let linkqr = "https://qrcode.tec-it.com/API/QRCode?data=" + item_qr;
+
+	console.log(linkqr);
+	var standee = getTemplate('0');
+	
+	(async() => {
+		
+		//console.log(img_standee_template);
+		let img_qr = await load(linkqr);
+		//console.log(img_qr);
+		
+		
+
+		genBg();
+		
+		ctx.drawImage(img_qr, standee.qr_offset.x, standee.qr_offset.y);
+		
+		if(customer.SHOP_NAME)
+		{
+			//shop name
+			ctx.fillStyle = "black";
+			ctx.textAlign = "center";
+			ctx.font = "22px SVN-Gilroy XBold";
+			ctx.fillText(customer.SHOP_NAME, standee.shop_offset.x, standee.shop_offset.y);
+		}
+		//name
+		ctx.font = "28px SVN-Gilroy XBold";
+		ctx.fillText(customer.CUSTOMER_NAME, standee.name_offset.x, standee.name_offset.y);
+		
+		//acc number
+		ctx.font = "27px SVN-Gilroy SemiBold";
+		ctx.fillText(customer.ACCTNO, standee.acc_offset.x, standee.acc_offset.y);
+		
+		//create link
+		let tdLink = document.getElementById('link_' + customer.STT);
+
+		const link = document.createElement("a");
+		link.textContent = 'Tải ảnh QR';
+		link.download = fileName;
+
+		//console.log(document.getElementById("myCanvas").toDataURL("image/png"));
+
+		let image = c.toDataURL("image/png").replace("image/png", "image/octet-stream");
+
+
+		link.setAttribute("href", image);
+		
+		//console.log('download end');
+		
+		tdLink.appendChild(link);
+		//break
+		const breakspan = document.createElement("span");
+		breakspan.textContent = ' ';
+		tdLink.appendChild(breakspan);
+
+		//view img
+		const linkView = document.createElement("a");
+		linkView.textContent = 'Xem ảnh';
+		linkView.download = fileName;
+		let imageView = c.toDataURL("image/png");
+		linkView.setAttribute("href", imageView);
+		tdLink.appendChild(linkView);
+		
+		//add file to array
+		c.toBlob(function (blob) {
+		  files.push({name: fileName, input: blob });
+		});
+		process++;
+		//console.log(process);
+		//console.log(customers.length);
+		if(process == customers.length)
+			showDownloadZipLink();
+		
+	})();
+}
+
+function startGenerateImg()
+{
+	genLinks(customers);
+
+	//show download, hide 
+	document.getElementById('btndownload').style.display = 'none';
+	
+	return false;
+}
+
+function showDownloadZipLink()
+{
+	document.getElementById('downloadLink').style.display = 'block';
+}
+
+</script>
+
+<script>
+
+//qr standee template define
+
+function getTemplate(code)
+{
+	return qr_standee_template_define.find(x => x.code === code);
+}
+
+let qr_standee_template_define = [
+  {
+    "code":"0",
+    "name": "Cá chép",
+    "url": "https://www.nguyenda.com/shopqr/khung_qr_new.png",
+	"width" : 481,
+	"height" : 670,
+    "qr_offset": { "x" : 60, "y" : 90},
+	"shop_offset": { "x" : 240, "y" : 65},
+	"name_offset": { "x" : 240, "y" : 580},
+	"acc_offset": { "x" : 240, "y" : 625},
+  },
+];
+
+</script>
+
+<script>
+"stream"in Blob.prototype||Object.defineProperty(Blob.prototype,"stream",{value(){return new Response(this).body}}),"setBigUint64"in DataView.prototype||Object.defineProperty(DataView.prototype,"setBigUint64",{value(e,n,t){const i=Number(0xffffffffn&n),r=Number(n>>32n);this.setUint32(e+(t?0:4),i,t),this.setUint32(e+(t?4:0),r,t)}});var e=e=>new DataView(new ArrayBuffer(e)),n=e=>new Uint8Array(e.buffer||e),t=e=>(new TextEncoder).encode(String(e)),i=e=>Math.min(4294967295,Number(e)),r=e=>Math.min(65535,Number(e));function f(e,i){if(void 0===i||i instanceof Date||(i=new Date(i)),e instanceof File)return{isFile:1,t:i||new Date(e.lastModified),i:e.stream()};if(e instanceof Response)return{isFile:1,t:i||new Date(e.headers.get("Last-Modified")||Date.now()),i:e.body};if(void 0===i)i=new Date;else if(isNaN(i))throw new Error("Invalid modification date.");if(void 0===e)return{isFile:0,t:i};if("string"==typeof e)return{isFile:1,t:i,i:t(e)};if(e instanceof Blob)return{isFile:1,t:i,i:e.stream()};if(e instanceof Uint8Array||e instanceof ReadableStream)return{isFile:1,t:i,i:e};if(e instanceof ArrayBuffer||ArrayBuffer.isView(e))return{isFile:1,t:i,i:n(e)};if(Symbol.asyncIterator in e)return{isFile:1,t:i,i:o(e[Symbol.asyncIterator]())};throw new TypeError("Unsupported input format.")}function o(e,n=e){return new ReadableStream({async pull(n){let t=0;for(;n.desiredSize>t;){const i=await e.next();if(!i.value){n.close();break}{const e=a(i.value);n.enqueue(e),t+=e.byteLength}}},cancel(e){n.throw?.(e)}})}function a(e){return"string"==typeof e?t(e):e instanceof Uint8Array?e:n(e)}function s(e,i,r){let[f,o]=function(e){return e?e instanceof Uint8Array?[e,1]:ArrayBuffer.isView(e)||e instanceof ArrayBuffer?[n(e),1]:[t(e),0]:[void 0,0]}(i);if(e instanceof File)return{o:d(f||t(e.name)),u:BigInt(e.size),l:o};if(e instanceof Response){const n=e.headers.get("content-disposition"),i=n&&n.match(/;\s*filename\*?=["']?(.*?)["']?$/i),a=i&&i[1]||e.url&&new URL(e.url).pathname.split("/").findLast(Boolean),s=a&&decodeURIComponent(a),u=r||+e.headers.get("content-length");return{o:d(f||t(s)),u:BigInt(u),l:o}}return f=d(f,void 0!==e||void 0!==r),"string"==typeof e?{o:f,u:BigInt(t(e).length),l:o}:e instanceof Blob?{o:f,u:BigInt(e.size),l:o}:e instanceof ArrayBuffer||ArrayBuffer.isView(e)?{o:f,u:BigInt(e.byteLength),l:o}:{o:f,u:u(e,r),l:o}}function u(e,n){return n>-1?BigInt(n):e?void 0:0n}function d(e,n=1){if(!e||e.every((c=>47===c)))throw new Error("The file must have a name.");if(n)for(;47===e[e.length-1];)e=e.subarray(0,-1);else 47!==e[e.length-1]&&(e=new Uint8Array([...e,47]));return e}var l=new Uint32Array(256);for(let e=0;e<256;++e){let n=e;for(let e=0;e<8;++e)n=n>>>1^(1&n&&3988292384);l[e]=n}function y(e,n=0){n^=-1;for(var t=0,i=e.length;t<i;t++)n=n>>>8^l[255&n^e[t]];return(-1^n)>>>0}function B(e,n,t=0){const i=e.getSeconds()>>1|e.getMinutes()<<5|e.getHours()<<11,r=e.getDate()|e.getMonth()+1<<5|e.getFullYear()-1980<<9;n.setUint16(t,i,1),n.setUint16(t+2,r,1)}function w({o:e,l:n},t){return 8*(!n||(t??function(e){try{b.decode(e)}catch{return 0}return 1}(e)))}var b=new TextDecoder("utf8",{fatal:1});function p(t,i=0){const r=e(30);return r.setUint32(0,1347093252),r.setUint32(4,754976768|i),B(t.t,r,10),r.setUint16(26,t.o.length,1),n(r)}async function*g(e){let{i:n}=e;if("then"in n&&(n=await n),n instanceof Uint8Array)yield n,e.m=y(n,0),e.u=BigInt(n.length);else{e.u=0n;const t=n.getReader();for(;;){const{value:n,done:i}=await t.read();if(i)break;e.m=y(n,e.m),e.u+=BigInt(n.length),yield n}}}function I(t,r){const f=e(16+(r?8:0));return f.setUint32(0,1347094280),f.setUint32(4,t.isFile?t.m:0,1),r?(f.setBigUint64(8,t.u,1),f.setBigUint64(16,t.u,1)):(f.setUint32(8,i(t.u),1),f.setUint32(12,i(t.u),1)),n(f)}function v(t,r,f=0,o=0){const a=e(46);return a.setUint32(0,1347092738),a.setUint32(4,755182848),a.setUint16(8,2048|f),B(t.t,a,12),a.setUint32(16,t.isFile?t.m:0,1),a.setUint32(20,i(t.u),1),a.setUint32(24,i(t.u),1),a.setUint16(28,t.o.length,1),a.setUint16(30,o,1),a.setUint16(40,t.isFile?33204:16893,1),a.setUint32(42,i(r),1),n(a)}function h(t,i,r){const f=e(r);return f.setUint16(0,1,1),f.setUint16(2,r-4,1),16&r&&(f.setBigUint64(4,t.u,1),f.setBigUint64(12,t.u,1)),f.setBigUint64(r-8,i,1),n(f)}function D(e){return e instanceof File||e instanceof Response?[[e],[e]]:[[e.input,e.name,e.size],[e.input,e.lastModified]]}var S=e=>function(e){let n=BigInt(22),t=0n,i=0;for(const r of e){if(!r.o)throw new Error("Every file must have a non-empty name.");if(void 0===r.u)throw new Error(`Missing size for file "${(new TextDecoder).decode(r.o)}".`);const e=r.u>=0xffffffffn,f=t>=0xffffffffn;t+=BigInt(46+r.o.length+(e&&8))+r.u,n+=BigInt(r.o.length+46+(12*f|28*e)),i||(i=e)}return(i||t>=0xffffffffn)&&(n+=BigInt(76)),n+t}(function*(e){for(const n of e)yield s(...D(n)[0])}(e));function downloadZip(e,n={}){const t={"Content-Type":"application/zip","Content-Disposition":"attachment"};return("bigint"==typeof n.length||Number.isInteger(n.length))&&n.length>0&&(t["Content-Length"]=String(n.length)),n.metadata&&(t["Content-Length"]=String(S(n.metadata))),new Response(N(e,n),{headers:t})}function N(t,a={}){const u=function(e){const n=e[Symbol.iterator in e?Symbol.iterator:Symbol.asyncIterator]();return{async next(){const e=await n.next();if(e.done)return e;const[t,i]=D(e.value);return{done:0,value:Object.assign(f(...i),s(...t))}},throw:n.throw?.bind(n),[Symbol.asyncIterator](){return this}}}(t);return o(async function*(t,f){const o=[];let a=0n,s=0n,u=0;for await(const e of t){const n=w(e,f.buffersAreUTF8);yield p(e,n),yield e.o,e.isFile&&(yield*g(e));const t=e.u>=0xffffffffn,i=12*(a>=0xffffffffn)|28*t;yield I(e,t),o.push(v(e,a,n,i)),o.push(e.o),i&&o.push(h(e,a,i)),t&&(a+=8n),s++,a+=BigInt(46+e.o.length)+e.u,u||(u=t)}let d=0n;for(const e of o)yield e,d+=BigInt(e.length);if(u||a>=0xffffffffn){const t=e(76);t.setUint32(0,1347094022),t.setBigUint64(4,BigInt(44),1),t.setUint32(12,755182848),t.setBigUint64(24,s,1),t.setBigUint64(32,s,1),t.setBigUint64(40,d,1),t.setBigUint64(48,a,1),t.setUint32(56,1347094023),t.setBigUint64(64,a+d,1),t.setUint32(72,1,1),yield n(t)}const l=e(22);l.setUint32(0,1347093766),l.setUint16(8,r(s),1),l.setUint16(10,r(s),1),l.setUint32(12,i(d),1),l.setUint32(16,i(a),1),yield n(l)}(u,a),u)}
+</script>
+<script >
+	async function zip() {
+	  const blob = await downloadZip(files).blob()
+
+	  const link = document.createElement("a")
+	  link.href = URL.createObjectURL(blob)
+	  link.download = zip_filename + ".zip"
+	  link.click()
+	}
+	document.getElementById("downloadLink").onclick = zip
+</script>
+
+<script>
+	var default_data = [
+		{
+			"STT": "27",
+			"CUSTOMER_NAME": "HOANG HAI YEN",
+			"ACCTNO": "1717111983",
+			"SHOP_CODE": "AA20870",
+			"SHOP_NAME": "CA PHE HAI BON DTN"
+		}
+	];
+
+	var customers = default_data;
+</script>
+
+</body>
+</html>
