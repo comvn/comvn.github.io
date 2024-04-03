@@ -10,71 +10,75 @@ tags:
     - Development Processes
 ---
 
->This blog post covers the difference between POC vs MVP vs Prototype to validate the assumptions with the minimum set of features for its initial users. We’ll go through each approach in detail, compare them and discuss how to choose the right strategy closest to product-market fit for your app development.
+>Bài đăng trên blog này đề cập đến sự khác biệt giữa POC, MVP và Prototype để xác thực các giả định với bộ tính năng tối thiểu cho người dùng ban đầu. Chúng ta sẽ xem xét chi tiết từng cách tiếp cận, so sánh chúng và thảo luận về cách chọn chiến lược phù hợp nhất với thị trường sản phẩm phù hợp để phát triển ứng dụng của bạn.
 
 ![](https://www.bacancytechnology.com/blog/wp-content/uploads/2020/11/Market-validation-min.jpg)
 
-**Table of Contents**
-1. Introduction
-2. An Overview of MVP, Prototype, and POC
-3. POC vs Prototype vs MVP: What’s The Difference?
-4. Key Considerations Before Developing an MVP, Prototype, or POC
-5. POC vs Prototype vs MVP: How to Choose the Best Approach?
-6. From POC to Prototype to MVP: One But Not the Same
-7. Conclusion
+**Nội dung**
+1. Giới thiệu
+2. Tổng quan về MVP, Prototype và POC
+3. POC vs Prototype vs MVP: Sự khác biệt là gì?
+4. Những cân nhắc chính trước khi phát triển theo MVP, Prototype, hoặc POC
+5. POC vs Prototype vs MVP: Làm thế nào để chọn cách tiếp cận tốt nhất?
+6. Từ POC đến Prototype đến MVP: Là một nhưng không giống nhau
+7. Kết luận
 
-# Introduction
+# Giới thiệu
 
-Every business faces many challenges while choosing an MVP, POC, and Prototype in the early stage of its product development. It may sometimes lead to a wrong selection strategy as well. By doing so, your organization may reveal the finances and cease the overall business growth. Depending on the project roadmap, MVP vs Prototype methods can be used together or independently.
+Mọi doanh nghiệp đều phải đối mặt với nhiều thách thức khi lựa chọn MVP, POC và Prototype trong giai đoạn đầu phát triển sản phẩm của mình. Đôi khi nó cũng có thể dẫn đến sự lựa chọn sai lầm về chiến lược. Bằng những kết quả của giai đoạn này, tổ chức của bạn có thể xem xét về vấn đề tài chính và ngừng tăng trưởng tổng thể doanh nghiệp. Tùy thuộc vào lộ trình dự án, các phương pháp MVP và Prototype có thể được sử dụng cùng nhau hoặc độc lập.
 
-Some of the Fortune 500 organizations too failed to woo their customers when they introduced a new app in the market at their initial stage. Have you wondered why? When it comes to developing a new product, you need to ensure that end-users actual problems are being placed with the right product-market fit solution.
+Một số tổ chức trong Fortune 500 cũng đã thất bại trong việc thu hút khách hàng khi giới thiệu một ứng dụng mới trên thị trường ở giai đoạn đầu. Khi nói đến việc phát triển một sản phẩm mới, chúng ta cần đảm bảo rằng các vấn đề thực tế của người dùng cuối đang được giải quyết bằng giải pháp phù hợp với thị trường sản phẩm.
 
-Let us delve deep into the concepts of POC vs Prototype vs MVP, an ideal approach to kickoff startup.
+Chúng ta hãy đi sâu vào các khái niệm về POC, Prototype và MVP, một cách tiếp cận lý tưởng để khởi nghiệp.
 
-# An Overview of MVP, Prototype, and POC
+# Tổng quan về MVP, Prototype và POC
 
 ## POC
 
 ![](https://www.bacancytechnology.com/blog/wp-content/uploads/2020/11/20-11-2020-%E2%80%93-7.png)
 
-A **Proof of Concept** is a mini project used to verify technical concepts such as technology, method, and integration. POC is used before you launch the product in the market and before you initiate your product development.
+**Proof of Concept** là một dự án nhỏ được sử dụng để xác minh các khái niệm kỹ thuật như công nghệ, phương pháp và tích hợp. POC được sử dụng trước khi tung sản phẩm ra thị trường và trước khi bắt đầu phát triển sản phẩm của mình.
 
-The goal is to assess the idea’s feasibility and validate the assumptions taken into the picture. Proof of Concept is not publicly available to every customer, making it unusable because it verifies if the idea is operationally workable.
+Mục tiêu là đánh giá tính khả thi của ý tưởng và xác nhận các giả định được đưa vào bức tranh tổng thể. Proof of Concept không được cung cấp công khai cho mọi khách hàng, khiến nó không thể sử dụng được vì nó chỉ có phạm vi xác minh xem ý tưởng có khả thi trong hoạt động hay không.
 
-If your startup is innovating, the viability of the new concept’s practical implementation is uncertain. Depending on the initial study, poc app development allows you to assess if your product runs technically flawless or not. If it doesn’t work, it might be aborted or changed initially. It is not mandatory to develop a POC if the concept is already available in the market.
+Nếu công ty khởi nghiệp của bạn đang đổi mới thì khả năng triển khai thực tế của ý tưởng mới là không chắc chắn. Tùy thuộc vào nghiên cứu ban đầu, việc phát triển ứng dụng POC cho phép bạn đánh giá xem sản phẩm của bạn có chạy hoàn hảo về mặt kỹ thuật hay không. Nếu nó không hoạt động, nó có thể bị hủy bỏ hoặc thay đổi ban đầu. Không bắt buộc phải phát triển POC nếu ý tưởng này đã có sẵn trên thị trường.
 
-What Do You Get With the POC Approach? POC is a tool for validating a unique product. Have a sneak peek at the benefits of executing the POC approach:
+Chúng ta nhận được gì với phương pháp tiếp cận POC? POC là một công cụ để xác nhận một sản phẩm độc nhất. Hãy xem qua những lợi ích của việc thực hiện phương pháp POC:
 
-* **Attracts the initial investors**: A POC works best to attract investments and investors who’re willing to fund proven ideas.
-* **Saves a good amount of time**: In a short period, POC makes sure that you know if your project can be implemented and proceed to the next startup development level.
-* **Make the correct choice**: To reduce major risks, you can create multiple POCs using different technologies.
-* **Staying ahead of the competition**: A POC is an inexpensive way to develop a new and unique product that will revolutionize the business.
+* **Thu hút các nhà đầu tư ban đầu**: POC hoạt động tốt nhất để thu hút các khoản đầu tư và nhà đầu tư sẵn sàng tài trợ cho các ý tưởng đã được chứng minh.
+* **Tiết kiệm rất nhiều thời gian**: Trong một khoảng thời gian ngắn, POC đảm bảo rằng bạn biết liệu dự án của mình có thể được triển khai hay không và tiến tới cấp độ phát triển khởi nghiệp tiếp theo.
+* **Đưa ra lựa chọn chính xác**: Để giảm thiểu rủi ro lớn, bạn có thể tạo nhiều POC bằng các công nghệ khác nhau.
+* **Luôn dẫn trước đối thủ**: POC là một cách tiếp cận ít tốn chi phí để phát triển một sản phẩm mới và độc đáo nhằm cải tiến hoạt động kinh doanh.
 
-**How Does a Proof of Concept Work?**
-If you’re doubtful about the feasibility of your idea, POC has two possibilities for you either a yes or a no. With a positive response, you can continue to build your project, whereas an adverse reaction won’t let you continue with a potentially non-viable project.
+**Proof of Concept hoạt động như thế nào?**
 
-As a part of an internal approach, POC process flow is not meant to be shown to your users but to solve serious issues. Pitching it to your potential investors can reap the fruits of raising seed funding.
+Nếu chúng ta nghi ngờ về tính khả thi của ý tưởng, POC có tác dụng cho chúng ta biết hai khả năng là có hoặc không. Với kết quả tích cực, chúng ta có thể quyết định tiếp tục xây dựng dự án của mình, trong khi kết quả không tốt sẽ cho chúng ta biết không nên tiếp tục với một dự án có khả năng không khả thi.
+
+Là một phần của phương pháp tiếp cận nội bộ, luồng quy trình POC không nhằm mục đích hiển thị cho người dùng của chúng ta mà nhằm giải quyết các vấn đề nghiêm trọng. Bên cạnh đó, kết quả có thể dùng để quảng cáo nó cho các nhà đầu tư tiềm năng của chúng ta và có thể thu được thành quả từ việc huy động vốn ban đầu.
 
 **Success Story of Walmart POC**
-Blockchain technology is used to create cryptocurrencies. However, Walmart decided to execute this technology to improve its logistics system by tracing product origins. The Walmart team created a POC to understand whether blockchain technology is suitable for this idea.
 
-In 2016, they created two mini products to test blockchain technology. The first one was used to track mangoes’ origin in the US, and the other was to track the meat sold by Walmart stores in China.
+Công nghệ chuỗi khối được sử dụng để tạo ra tiền điện tử. Tuy nhiên, Walmart đã quyết định triển khai công nghệ này để cải thiện hệ thống hậu cần của mình bằng cách truy tìm nguồn gốc sản phẩm. Nhóm Walmart đã tạo POC để tìm hiểu xem liệu công nghệ blockchain có phù hợp với ý tưởng này hay không.
 
-These two projects were created to speed up the process by determining the origin of successfully tested goods. Thanks to blockchain technology. They helped the company track product origins, see dispatch dates, check logistics, and arrive at supermarkets within a few seconds.
+Năm 2016, họ đã tạo ra hai sản phẩm nhỏ để thử nghiệm công nghệ blockchain. Cái đầu tiên dùng để theo dõi nguồn gốc xoài ở Mỹ và cái thứ hai dùng để theo dõi thịt được bán bởi các cửa hàng Walmart ở Trung Quốc.
 
-Today, Walmart is successfully implementing blockchain technology by expanding the functionality of its blockchain-based system.
+Hai dự án này được tạo ra nhằm đẩy nhanh quá trình xác định nguồn gốc của hàng hóa được kiểm nghiệm thành công. Nhờ công nghệ chuỗi khối. Họ đã giúp công ty theo dõi nguồn gốc sản phẩm, xem ngày gửi hàng, kiểm tra hậu cần và đến siêu thị trong vòng vài giây.
 
-## Prototype
+Ngày nay, Walmart đang triển khai thành công công nghệ blockchain bằng cách mở rộng chức năng của hệ thống dựa trên blockchain.
+
+## Prototype - Bản mẫu
 
 ![](https://www.bacancytechnology.com/blog/wp-content/uploads/2020/11/20-11-2020-%E2%80%93-9-1.png)
 
-Goal: To demonstrate how the product will look
+**Mục tiêu**: Để chứng tỏ sản phẩm sẽ trông như thế nào.
 
-A **prototype** is an interactive mirror of your products’ eye that manifests the main design elements and determines the user flows. It focuses on determining the look and feel of the product and understanding the fundamental project workflows needed to be included during the product development stage.
+Một **Prototype** thể hiện các yếu tố thiết kế chính và xác định luồng người dùng. Nó tập trung vào việc xác định giao diện của sản phẩm và hiểu các quy trình công việc cơ bản của dự án cần được đưa vào trong giai đoạn phát triển sản phẩm.
 
-**What is a Mobile app prototype?**
+**Bản mẫu ứng dụng dành cho thiết bị di động là gì?**
 
-A mobile app prototype shows how an app will flow from one screen to another and processes the app development. You can visualize the UX before you start developing your project. Many individuals get confused about the Proof of concept vs. Prototype. The basic difference between proof of concept and prototype is that the former demonstrates whether a product or its features could be developed.
+Bản mẫu ứng dụng dành cho thiết bị di động cho thấy cách ứng dụng sẽ chuyển từ màn hình này sang màn hình khác và xử lý quá trình phát triển ứng dụng. Chúng ta có thể hình dung UX trước khi bắt đầu phát triển dự án của mình. 
+
+Nhiều người nhầm lẫn giữa POC và Prototype, sự khác biệt cơ bản là ở chỗ bằng chứng trước đây chứng minh liệu một sản phẩm hoặc các tính năng của nó có thể được phát triển hay không.
 
 In contrast, the latter demonstrates how it will be developed.
 
