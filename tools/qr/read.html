@@ -1,53 +1,23 @@
+---
+layout: tool
+title: "Read QR"
+---
 
-<!-- saved from url=(0031)https://danimoh.github.io/jsQR/ -->
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <script src="./js/jsQR.js"></script>
+  <script src="./js/promptparse"></script>
   
-  <title>jsQR Demo</title>
-  <script src="./tools/qr/js/jsQR.js"></script>
-  <script src="./tools/qr/js/promptparse"></script>
-  
-  <script src="./tools/qr/js/utf8.js"></script>
+  <script src="./js/utf8.js"></script>
   
 	<script type="module">
 	import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
-
-
 	</script>
   
-  <script src="./tools/qr/js/crc.js"></script>
-  <script src="./tools/qr/js/scheme.js"></script>
-  <script src="./tools/qr/js/emvqr.js"></script>
-  
-  
-  
-  <style>
-	/* latin-ext */
-	@font-face {
-	  font-family: 'Ropa Sans';
-	  font-style: normal;
-	  font-weight: 400;
-	  src: url(https://fonts.gstatic.com/s/ropasans/v15/EYqxmaNOzLlWtsZSScy6UzNpY5I.woff2) format('woff2');
-	  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-	}
-	/* latin */
-	@font-face {
-	  font-family: 'Ropa Sans';
-	  font-style: normal;
-	  font-weight: 400;
-	  src: url(https://fonts.gstatic.com/s/ropasans/v15/EYqxmaNOzLlWtsZSScy6XTNp.woff2) format('woff2');
-	  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-	}
+  <script src="./js/crc.js"></script>
+  <script src="./js/scheme.js"></script>
+  <script src="./js/emvqr.js"></script>
 
-  </style>
   <style>
-    body {
-      font-family: 'Ropa Sans', sans-serif;
-      color: #333;
-      max-width: 640px;
-      margin: 0 auto;
-      position: relative;
-    }
-
+    
     #githubLink {
       position: absolute;
       right: 0;
@@ -92,8 +62,7 @@
 	.null { color: magenta; }
 	.key { color: red; }
   </style>
-</head>
-<body>
+
   <h1>Read QR Demo</h1>
   
   Chọn file image upload:
@@ -272,7 +241,3 @@
 	  })
 	}
 </script>
-
-
-</body>
-</html>
