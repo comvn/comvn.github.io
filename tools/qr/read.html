@@ -1,21 +1,11 @@
 ---
-layout: 		default
+layout: 		tool
+name:			"Read QR"
 description: 	"Read QR Image, parse to QR String and detect payment information"
 header-img: 	img/bg/toolbg.png
+header-mask: 	0.6
 ---
 <!-- Page Header -->
-<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-				<div class="site-heading" id="tag-heading">
-					<h1>Read QR</h1>
-					<span class="subheading">{{ page.description }}</span>
-				</div>
-			</div>
-		</div>
-	</div>
-</header>
 
 <script src="../js/jsQR.js"></script>
 <script src="./js/promptparse"></script>
@@ -74,8 +64,6 @@ import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master
 	.key { color: red; }
   </style>
 
-<div class="en post-container">
-
     <h1>Read QR Demo</h1>
   
   Chọn file image upload:
@@ -100,10 +88,7 @@ import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master
 		<pre id="qr_schema">
 		</pre>
 	</div>
-</div>
 
-  
-	
   <script>
 	const base64 = {
 		decode: s => decodeURIComponent(escape(window.atob( s ))),

@@ -17,6 +17,10 @@ layout: default
         background: rgba(0,0,0, {{ page.header-mask }});
     }
     {% endif %}
+    .container
+    {
+        background-color: #fff;
+    }
 </style>
 <header class="intro-header" >
     <div class="header-mask"></div>
@@ -29,36 +33,23 @@ layout: default
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
-                    <h1>{{ page.title }}</h1>
+                    <h1>{{ page.name }}</h1>
                     {% comment %}
                         always create a h2 for keeping the margin , Hux
                     {% endcomment %}
-                    {% comment %} if page.subtitle {% endcomment %}
-                    <h2 class="subheading">{{ page.subtitle }}</h2>
+                    {% comment %} if page.description {% endcomment %}
+                    <h2 class="subheading">{{ page.description }}</h2>
                     {% comment %} endif {% endcomment %}
                 </div>
             </div>
         </div>
     </div>
-
-    {% include wave.html %}
-
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
+<!-- Content -->
+<div class="container">
         <div class="row">
-
-            <!-- Post Container -->
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                post-container">
-
-				{{ content }}
-
-            </div>
+            <!-- Container -->
+            {{ content }}
         </div>
-    </div>
-</article>
+</div>
