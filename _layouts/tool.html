@@ -21,6 +21,9 @@ layout: default
     {
         background-color: #fff;
     }
+    .post-heading {
+        padding: 50px 50px 10px 50px;
+    }
 </style>
 <header class="intro-header" >
     <div class="header-mask"></div>
@@ -33,12 +36,12 @@ layout: default
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
-                    <h1>{{ page.title }}</h1>
+                    <h2>{{ page.subtitle }}</h2>
                     {% comment %}
                         always create a h2 for keeping the margin , Hux
                     {% endcomment %}
                     {% comment %} if page.description {% endcomment %}
-                    <h2 class="subheading">{{ page.description }}</h2>
+                    <h3 class="subheading">{{ page.description }}</h3>
                     {% comment %} endif {% endcomment %}
                 </div>
             </div>

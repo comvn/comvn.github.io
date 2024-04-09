@@ -1,6 +1,6 @@
 ---
 layout: 		tool
-title:			"Read QR"
+subtitle:			"Read QR"
 description: 	"Read QR Image, parse to QR String and detect payment information"
 header-img: 	img/bg/toolbg.png
 header-mask: 	0.6
@@ -11,7 +11,7 @@ header-mask: 	0.6
 <script src="./js/promptparse"></script>
 <script src="./js/utf8.js"></script>
 <script type="module">
-import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
+import utf8 from "./js/utf8.js";
 </script>
 <script src="./js/crc.js"></script>
 <script src="./js/scheme.js"></script>
@@ -80,12 +80,12 @@ import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master
 		<p>
 			QR Array String:
 		</p>
-		<p id="result">
-		</p>
+		<textarea id="result" style="width:100%;">
+		</textarea>
 		<p>
 			QR Schema:
 		</p>
-		<pre id="qr_schema">
+		<pre id="qr_schema" style="width:100%;">
 		</pre>
 	</div>
 
@@ -167,8 +167,7 @@ import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master
 						// Get Value of Tag ID '00'
 						//console.log(ppqr.getTagValue('00'));
 						
-						
-						const resultSchema = decode(code.data);
+						const resultSchema = read(code.data, true);
 						qr_schema.innerHTML = syntaxHighlight(JSON.stringify(resultSchema, null, 2));
 						console.log('resultSchema', resultSchema);
 						
@@ -176,8 +175,6 @@ import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master
 					else {
 						result.innerText = "Not found QR!!!";
 					}
-					
-					
 				}
 			});
 		};
