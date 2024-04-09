@@ -1,25 +1,35 @@
 ---
-layout:     tool
-title:      Read QR
-subtitle:   Read QR Image, parse to QR String and detect payment information
-header-img: img/bg/toolbg.png
-header-mask: 0.6
-tags:
-    - qr_code
+layout: 		default
+title:			"Read QR"
+description: 	"Read QR Image, parse to QR String and detect payment information"
+header-img: 	img/bg/toolbg.png
 ---
+<!-- Page Header -->
+<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+				<div class="site-heading" id="tag-heading">
+					<h1>{{ page.title }}</h1>
+					<span class="subheading">{{ page.description }}</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</header>
 
-  <script src="./js/jsQR.js"></script>
-  <script src="./js/promptparse"></script>
-  
-  <script src="./js/utf8.js"></script>
-  
+	<script src="../js/jsQR.js"></script>
+	<script src="./js/promptparse"></script>
+
+	<script src="./js/utf8.js"></script>
+
 	<script type="module">
 	import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
 	</script>
-  
-  <script src="./js/crc.js"></script>
-  <script src="./js/scheme.js"></script>
-  <script src="./js/emvqr.js"></script>
+
+	<script src="./js/crc.js"></script>
+	<script src="./js/scheme.js"></script>
+	<script src="./js/emvqr.js"></script>
 
   <style>
     
