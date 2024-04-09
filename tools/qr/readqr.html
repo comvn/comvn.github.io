@@ -1,0 +1,278 @@
+
+<!-- saved from url=(0031)https://danimoh.github.io/jsQR/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <title>jsQR Demo</title>
+  <script src="./tools/qr/js/jsQR.js"></script>
+  <script src="./tools/qr/js/promptparse"></script>
+  
+  <script src="./tools/qr/js/utf8.js"></script>
+  
+	<script type="module">
+	import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
+
+
+	</script>
+  
+  <script src="./tools/qr/js/crc.js"></script>
+  <script src="./tools/qr/js/scheme.js"></script>
+  <script src="./tools/qr/js/emvqr.js"></script>
+  
+  
+  
+  <style>
+	/* latin-ext */
+	@font-face {
+	  font-family: 'Ropa Sans';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: url(https://fonts.gstatic.com/s/ropasans/v15/EYqxmaNOzLlWtsZSScy6UzNpY5I.woff2) format('woff2');
+	  unicode-range: U+0100-02AF, U+0304, U+0308, U+0329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+	}
+	/* latin */
+	@font-face {
+	  font-family: 'Ropa Sans';
+	  font-style: normal;
+	  font-weight: 400;
+	  src: url(https://fonts.gstatic.com/s/ropasans/v15/EYqxmaNOzLlWtsZSScy6XTNp.woff2) format('woff2');
+	  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+	}
+
+  </style>
+  <style>
+    body {
+      font-family: 'Ropa Sans', sans-serif;
+      color: #333;
+      max-width: 640px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    #githubLink {
+      position: absolute;
+      right: 0;
+      top: 12px;
+      color: #2D99FF;
+    }
+
+    h1 {
+      margin: 10px 0;
+      font-size: 40px;
+    }
+
+    #loadingMessage {
+      text-align: center;
+      padding: 40px;
+      background-color: #eee;
+    }
+
+    #canvas {
+      width: 100%;
+    }
+
+    #output {
+      margin-top: 20px;
+      background: #eee;
+      padding: 10px;
+      padding-bottom: 0;
+    }
+
+    #output div {
+      padding-bottom: 10px;
+      word-wrap: break-word;
+    }
+
+    #noQRFound {
+      text-align: center;
+    }
+	pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+	.string { color: green; }
+	.number { color: darkorange; }
+	.boolean { color: blue; }
+	.null { color: magenta; }
+	.key { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Read QR Demo</h1>
+  
+  Chọn file image upload:
+	<form id="uploadImg">
+		<input type="file" id="fileImg"  />
+	</form>
+	<div style="display:none">
+		<img id="imgObj" ></img>
+	</div>
+	<div style="display:none">
+		<canvas id='canvas'></canvas>
+	</div>
+	<div>
+		<p>
+			QR Array String:
+		</p>
+		<p id="result">
+		</p>
+		<p>
+			QR Schema:
+		</p>
+		<pre id="qr_schema">
+		</pre>
+	</div>
+	
+  <script>
+	const base64 = {
+		decode: s => decodeURIComponent(escape(window.atob( s ))),
+		encode: b => window.btoa(unescape(encodeURIComponent( b )))
+	};
+  
+	var canvas = document.getElementById('canvas');
+	var input = document.getElementById('fileImg');
+	var imgObj = document.getElementById('imgObj');
+	var result = document.getElementById('result');
+	var ctx = canvas.getContext('2d');
+
+	var imgFile = null;
+	var imgBlob = null;
+	var imgDataUrl = null;
+	var width = 0;
+	var height = 0;
+	
+	var imageData = null;
+	
+	const fileUpload = document.querySelector("#fileImg");
+
+	fileUpload.addEventListener("change", (event) => {
+
+		const { files } = event.target;
+		const file = event.target.files[0];
+
+		const reader = new FileReader();
+		
+		reader.onload = function (e) {
+			imageData = e.target.result;
+			var imgBlob = new Blob([imageData]);
+
+			var imgaDataB64 = blobToDataURL(imgBlob, function(dataurl){
+				//1. calculate height + width
+				var img = new Image();
+				imgObj.src = dataurl;
+				
+				//console.log(dataurl);
+				
+				imgObj.onload = function() {
+					width = this.width;
+					height = this.height;
+					
+					//set height + width to canvas
+					ctx.canvas.width = width;
+					ctx.canvas.height = height;
+					canvas.style.width = width;
+					canvas.style.height = height;
+					
+					imgFile = input.files[0];
+					
+					console.log(imgObj);
+					//2. set image to canvas
+					
+					ctx.drawImage(imgObj,0,0);
+					
+					//3. get image bitmap
+					
+					var imgBitmap = ctx.getImageData(0, 0, width, height).data;
+					
+					//console.log(imgBitmap);
+					//4. read QR
+					
+					//canvas.renderImage(imgFile);
+					
+					const options = "attemptBoth";
+					const code = jsQR(imgBitmap, width, height, options);
+
+					if (code) {
+						console.log("Found QR code", code);
+						result.innerText = code.data;
+						//show tag EMVCo
+						//const ppqr = promptparse.parse(code.data);
+
+						// Get Value of Tag ID '00'
+						//console.log(ppqr.getTagValue('00'));
+						
+						
+						const resultSchema = decode(code.data);
+						qr_schema.innerHTML = syntaxHighlight(JSON.stringify(resultSchema, null, 2));
+						console.log('resultSchema', resultSchema);
+						
+					}
+					else {
+						result.innerText = "Not found QR!!!";
+					}
+					
+					
+				}
+			});
+		};
+
+		reader.readAsArrayBuffer(file);
+		
+		//console.log(img.src);
+		//var imageDataBlob = base64.decode(dataurl);
+	})
+
+	function syntaxHighlight(json) {
+		if (typeof json != 'string') {
+			 json = JSON.stringify(json, undefined, 2);
+		}
+		json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+		return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
+			var cls = 'number';
+			if (/^"/.test(match)) {
+				if (/:$/.test(match)) {
+					cls = 'key';
+				} else {
+					cls = 'string';
+				}
+			} else if (/true|false/.test(match)) {
+				cls = 'boolean';
+			} else if (/null/.test(match)) {
+				cls = 'null';
+			}
+			return '<span class="' + cls + '">' + match + '</span>';
+		});
+	}
+	
+	//input.addEventListener('change', blobToCanvas, false);
+	
+	//**dataURL to blob**
+	function dataURLtoBlob(dataurl) {
+		var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+			bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+		while(n--){
+			u8arr[n] = bstr.charCodeAt(n);
+		}
+		return new Blob([u8arr], {type:mime});
+	}
+
+	//**blob to dataURL**
+	function blobToDataURL(blob, callback) {
+		var a = new FileReader();
+		a.onload = function(e) {callback(e.target.result);}
+		a.readAsDataURL(blob);
+	}
+
+	//test:
+	//var blob = dataURLtoBlob('data:text/plain;base64,YWFhYWFhYQ==');
+	//blobToDataURL(blob, function(dataurl){
+		//console.log(dataurl);
+	//});
+	
+	function blobToCanvas() {
+	  createImageBitmap(input.files[0]).then(imageBitmap => {
+		console.log(imageBitmap);
+		canvas.getContext('2d').drawImage(imageBitmap, 0, 0)
+	  })
+	}
+</script>
+
+
+</body>
+</html>
