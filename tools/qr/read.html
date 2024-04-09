@@ -1,6 +1,5 @@
 ---
 layout: 		default
-title:			"Read QR"
 description: 	"Read QR Image, parse to QR String and detect payment information"
 header-img: 	img/bg/toolbg.png
 ---
@@ -10,7 +9,7 @@ header-img: 	img/bg/toolbg.png
 		<div class="row">
 			<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 				<div class="site-heading" id="tag-heading">
-					<h1>{{ page.title }}</h1>
+					<h1>Read QR</h1>
 					<span class="subheading">{{ page.description }}</span>
 				</div>
 			</div>
@@ -18,18 +17,15 @@ header-img: 	img/bg/toolbg.png
 	</div>
 </header>
 
-	<script src="../js/jsQR.js"></script>
-	<script src="./js/promptparse"></script>
-
-	<script src="./js/utf8.js"></script>
-
-	<script type="module">
-	import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
-	</script>
-
-	<script src="./js/crc.js"></script>
-	<script src="./js/scheme.js"></script>
-	<script src="./js/emvqr.js"></script>
+<script src="../js/jsQR.js"></script>
+<script src="./js/promptparse"></script>
+<script src="./js/utf8.js"></script>
+<script type="module">
+import utf8 from "https://raw.githubusercontent.com/mathiasbynens/utf8.js/master/utf8.js";
+</script>
+<script src="./js/crc.js"></script>
+<script src="./js/scheme.js"></script>
+<script src="./js/emvqr.js"></script>
 
   <style>
     
@@ -78,7 +74,9 @@ header-img: 	img/bg/toolbg.png
 	.key { color: red; }
   </style>
 
-  <h1>Read QR Demo</h1>
+<div class="en post-container">
+
+    <h1>Read QR Demo</h1>
   
   Chọn file image upload:
 	<form id="uploadImg">
@@ -102,6 +100,9 @@ header-img: 	img/bg/toolbg.png
 		<pre id="qr_schema">
 		</pre>
 	</div>
+</div>
+
+  
 	
   <script>
 	const base64 = {
