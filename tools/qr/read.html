@@ -16,6 +16,7 @@ import utf8 from "/tools/qr/js/utf8.js";
 <script src="/tools/qr/js/crc.js"></script>
 <script src="/tools/qr/js/scheme.js"></script>
 <script src="/tools/qr/js/emvqr.js"></script>
+<script src="js/jsontree.js"></script>
 
   <style>
     
@@ -64,6 +65,86 @@ import utf8 from "/tools/qr/js/utf8.js";
 	.key { color: red; }
   </style>
 
+<style>
+	ul.jstList {
+	  padding-left: 15px;
+	  list-style: none;
+	  margin-top: 0;
+	  margin-bottom: 0;
+	}
+	li.jstItem {
+	  padding-left: 0px;
+	  list-style: none;
+	}
+	
+	.jstTree {
+	  font-weight: 400;
+	  font-family: monospace;
+	}
+	
+	.jstProperty {
+	  color: #006600;
+	  font-weight:bold;
+	}
+	
+	.jstBool {
+	  color: #1CA8DD;
+	}
+	
+	.jstNum {
+	  color: #9F85FF;
+	}
+	
+	.jstNull {
+	  color: #D0D0D0;
+	}
+	
+	.jstStr {
+	  color: #ff0066;
+	}
+	
+	.jstComma {
+	}
+	
+	.jstColon {
+	}
+	
+	.jstCollapse {
+	  margin-left: -15px;
+	  position: absolute;
+	  -webkit-user-select: none;
+	  user-select: none;
+	  text-decoration: none;
+	  color: inherit;
+	  cursor: pointer;
+	}
+	
+	.jstExpand {
+	  margin-left: -15px;
+	  position: absolute;
+	  -webkit-user-select: none;
+	  user-select: none;
+	  text-decoration: none;
+	  color: inherit;
+	  cursor: pointer;
+	}
+	
+	.jstCollapse::before {
+	  content: '-';
+	}
+	
+	.jstExpand::before {
+	  content: '+'
+	}
+	
+	.jstBracket {
+	}
+	
+	.jstHiddenBlock {
+	  display: none;
+	}
+	  </style>
+
     <h1>Read QR Demo</h1>
   
   Chọn file image upload:
@@ -85,8 +166,8 @@ import utf8 from "/tools/qr/js/utf8.js";
 		<p>
 			QR Schema:
 		</p>
-		<pre id="qr_schema" style="width:100%;">
-		</pre>
+		<div id="qr_schema">
+		</div>
 	</div>
 
   <script>
@@ -168,9 +249,9 @@ import utf8 from "/tools/qr/js/utf8.js";
 						//console.log(ppqr.getTagValue('00'));
 						
 						const resultSchema = read(code.data, true);
-						qr_schema.innerHTML = syntaxHighlight(JSON.stringify(resultSchema, null, 2));
+						//qr_schema.innerHTML = syntaxHighlight(JSON.stringify(resultSchema, null, 2));
+						document.getElementById('qr_schema').innerHTML = JSONTree.create(resultSchema);
 						console.log('resultSchema', resultSchema);
-						
 					}
 					else {
 						result.innerText = "Not found QR!!!";
