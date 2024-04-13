@@ -39,12 +39,12 @@ layout: default
                         <a class="tag" href="{{ site.baseurl }}/tags/#{{ tag }}" title="{{ tag }}">{{ tag }}</a>
                         {% endfor %}
                     </div>
-                    <p>{{ page.subtitle }}</p>
+                    <h2>{{ page.subtitle }}</h2>
                     {% comment %}
                         always create a h2 for keeping the margin , Hux
                     {% endcomment %}
                     {% comment %} if page.description {% endcomment %}
-                    <h3 class="subheading">{{ page.description }}</h3>
+                    <p class="subheading">{{ page.description }}</p>
                     {% comment %} endif {% endcomment %}
                 </div>
             </div>
