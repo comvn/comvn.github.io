@@ -8,7 +8,7 @@ header-img: img/qr/qr.png
 header-mask: 0.5
 catalog: true
 tags:
-    qr_code
+    - QR Code
 ---
 
 >Các phương thức thanh toán đang phát triển nhanh chóng và thanh toán bằng mã QR đang trở thành một lựa chọn ngày càng phổ biến. Công nghệ này cho phép người dùng thực hiện giao dịch không tiếp xúc bằng cách quét mã QR từ ứng dụng di động hoặc nhãn dán mã QR. Trong bài viết này, chúng ta sẽ khám phá thanh toán bằng mã QR là gì, cách chúng hoạt động và những lợi ích mà chúng mang lại cho cả người bán và khách hàng.
