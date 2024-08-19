@@ -1,3 +1,5 @@
+include: [".well-known"]
+
 # Site settings
 title:      NDA
 title-home: NDA Blog
