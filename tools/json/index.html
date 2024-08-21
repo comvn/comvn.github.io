@@ -1,0 +1,1463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>JsonGrid - All-In-One JSON Solution</title>
+    <base href="/">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <meta name="description"
+        content="Online JSON Viewer - Convert JSON Strings to a Friendly Readable Format, View JSON in table or Grid">
+    <meta name="keywords"
+        content="json grid,jsongrid,json grid viewer,json to table,json2table, format json online, json formatter, json formatter online, online json formatter, json validator, format json, json, json beautifier, json beautify, json format, jsonlint, json editor online, json parser, json parser online, json tools,online json editor,online json parser, json editor, json viewer,validate json">
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+
+        :root {
+            --blue: #375a7f;
+            --indigo: #6610f2;
+            --purple: #6f42c1;
+            --pink: #e83e8c;
+            --red: #E74C3C;
+            --orange: #fd7e14;
+            --yellow: #F39C12;
+            --green: #00bc8c;
+            --teal: #20c997;
+            --cyan: #3498DB;
+            --white: #fff;
+            --gray: #999;
+            --gray-dark: #303030;
+            --primary: #375a7f;
+            --secondary: #444;
+            --success: #00bc8c;
+            --info: #3498DB;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --light: #303030;
+            --dark: #adb5bd;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+        }
+
+        *,
+        *::before,
+        *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -ms-overflow-style: scrollbar;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-size: 0.9375rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            text-align: left;
+            background-color: #222
+        }
+
+        @-webkit-keyframes progress-bar-stripes {
+            from {
+                background-position: 0.625rem 0
+            }
+
+            to {
+                background-position: 0 0
+            }
+        }
+
+        @media print {
+
+            *,
+            *::before,
+            *::after {
+                text-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important
+            }
+
+            @page {
+                size: a3
+            }
+
+            body {
+                min-width: 992px !important
+            }
+        }
+    </style>
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Lato:400,700,400italic");
+
+        :root {
+            --blue: #375a7f;
+            --indigo: #6610f2;
+            --purple: #6f42c1;
+            --pink: #e83e8c;
+            --red: #E74C3C;
+            --orange: #fd7e14;
+            --yellow: #F39C12;
+            --green: #00bc8c;
+            --teal: #20c997;
+            --cyan: #3498DB;
+            --white: #fff;
+            --gray: #999;
+            --gray-dark: #303030;
+            --primary: #375a7f;
+            --secondary: #444;
+            --success: #00bc8c;
+            --info: #3498DB;
+            --warning: #F39C12;
+            --danger: #E74C3C;
+            --light: #303030;
+            --dark: #adb5bd;
+            --breakpoint-xs: 0;
+            --breakpoint-sm: 576px;
+            --breakpoint-md: 768px;
+            --breakpoint-lg: 992px;
+            --breakpoint-xl: 1200px;
+            --font-family-sans-serif: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace
+        }
+
+        *,
+        *::before,
+        *::after {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box
+        }
+
+        html {
+            font-family: sans-serif;
+            line-height: 1.15;
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            -ms-overflow-style: scrollbar;
+            -webkit-tap-highlight-color: transparent
+        }
+
+        @-ms-viewport {
+            width: device-width
+        }
+
+        nav {
+            display: block
+        }
+
+        body {
+            margin: 0;
+            font-family: "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            font-size: 0.9375rem;
+            font-weight: 400;
+            line-height: 1.5;
+            color: #fff;
+            text-align: left;
+            background-color: #222
+        }
+
+        h1,
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0.5rem
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 1rem
+        }
+
+        ul {
+            margin-top: 0;
+            margin-bottom: 1rem
+        }
+
+        a {
+            color: #00bc8c;
+            text-decoration: none;
+            background-color: transparent;
+            -webkit-text-decoration-skip: objects
+        }
+
+        a:hover {
+            color: #007053;
+            text-decoration: underline
+        }
+
+        a:not([href]):not([tabindex]) {
+            color: inherit;
+            text-decoration: none
+        }
+
+        a:not([href]):not([tabindex]):hover,
+        a:not([href]):not([tabindex]):focus {
+            color: inherit;
+            text-decoration: none
+        }
+
+        a:not([href]):not([tabindex]):focus {
+            outline: 0
+        }
+
+        button {
+            border-radius: 0
+        }
+
+        button:focus {
+            outline: 1px dotted;
+            outline: 5px auto -webkit-focus-ring-color
+        }
+
+        button {
+            margin: 0;
+            font-family: inherit;
+            font-size: inherit;
+            line-height: inherit
+        }
+
+        button {
+            overflow: visible
+        }
+
+        button {
+            text-transform: none
+        }
+
+        button,
+        html [type="button"] {
+            -webkit-appearance: button
+        }
+
+        button::-moz-focus-inner,
+        [type="button"]::-moz-focus-inner {
+            padding: 0;
+            border-style: none
+        }
+
+        h1,
+        h2 {
+            margin-bottom: 0.5rem;
+            font-family: inherit;
+            font-weight: 500;
+            line-height: 1.2;
+            color: inherit
+        }
+
+        h1 {
+            font-size: 3rem
+        }
+
+        h2 {
+            font-size: 2.5rem
+        }
+
+        .container {
+            width: 100%;
+            padding-right: 15px;
+            padding-left: 15px;
+            margin-right: auto;
+            margin-left: auto
+        }
+
+        @media (min-width: 576px) {
+            .container {
+                max-width: 540px
+            }
+        }
+
+        @media (min-width: 768px) {
+            .container {
+                max-width: 720px
+            }
+        }
+
+        @media (min-width: 992px) {
+            .container {
+                max-width: 960px
+            }
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                max-width: 1140px
+            }
+        }
+
+        .row {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            margin-right: -15px;
+            margin-left: -15px
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 400;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            border: 1px solid transparent;
+            padding: 0.375rem 0.75rem;
+            font-size: 0.9375rem;
+            line-height: 1.5;
+            border-radius: 0.25rem;
+            -webkit-transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+            transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out, -webkit-box-shadow 0.15s ease-in-out
+        }
+
+        @media screen and (prefers-reduced-motion: reduce) {
+            .btn {
+                -webkit-transition: none;
+                transition: none
+            }
+        }
+
+        .btn:hover,
+        .btn:focus {
+            text-decoration: none
+        }
+
+        .btn:focus {
+            outline: 0;
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.25);
+            box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.25)
+        }
+
+        .btn:disabled {
+            opacity: 0.65
+        }
+
+        .btn:not(:disabled):not(.disabled) {
+            cursor: pointer
+        }
+
+        .btn-primary {
+            color: #fff;
+            background-color: #375a7f;
+            border-color: #375a7f
+        }
+
+        .btn-primary:hover {
+            color: #fff;
+            background-color: #2b4764;
+            border-color: #28415b
+        }
+
+        .btn-primary:focus {
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.5)
+        }
+
+        .btn-primary:disabled {
+            color: #fff;
+            background-color: #375a7f;
+            border-color: #375a7f
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active {
+            color: #fff;
+            background-color: #28415b;
+            border-color: #243a53
+        }
+
+        .btn-primary:not(:disabled):not(.disabled):active:focus {
+            -webkit-box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.5);
+            box-shadow: 0 0 0 0.2rem rgba(55, 90, 127, 0.5)
+        }
+
+        .collapse:not(.show) {
+            display: none
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 2rem
+        }
+
+        .nav-link:hover,
+        .nav-link:focus {
+            text-decoration: none
+        }
+
+        .navbar {
+            position: relative;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+            padding: 1rem 1rem
+        }
+
+        .navbar-brand {
+            display: inline-block;
+            padding-top: 0.32421875rem;
+            padding-bottom: 0.32421875rem;
+            margin-right: 1rem;
+            font-size: 1.171875rem;
+            line-height: inherit;
+            white-space: nowrap
+        }
+
+        .navbar-brand:hover,
+        .navbar-brand:focus {
+            text-decoration: none
+        }
+
+        .navbar-nav {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            padding-left: 0;
+            margin-bottom: 0;
+            list-style: none
+        }
+
+        .navbar-nav .nav-link {
+            padding-right: 0;
+            padding-left: 0
+        }
+
+        .navbar-collapse {
+            -ms-flex-preferred-size: 100%;
+            flex-basis: 100%;
+            -webkit-box-flex: 1;
+            -ms-flex-positive: 1;
+            flex-grow: 1;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center
+        }
+
+        .navbar-toggler {
+            padding: 0.25rem 0.75rem;
+            font-size: 1.171875rem;
+            line-height: 1;
+            background-color: transparent;
+            border: 1px solid transparent;
+            border-radius: 0.25rem
+        }
+
+        .navbar-toggler:hover,
+        .navbar-toggler:focus {
+            text-decoration: none
+        }
+
+        .navbar-toggler:not(:disabled):not(.disabled) {
+            cursor: pointer
+        }
+
+        .navbar-toggler-icon {
+            display: inline-block;
+            width: 1.5em;
+            height: 1.5em;
+            vertical-align: middle;
+            content: "";
+            background: no-repeat center center;
+            background-size: 100% 100%
+        }
+
+        @media (min-width: 992px) {
+            .navbar-expand-lg {
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-flow: row nowrap;
+                flex-flow: row nowrap;
+                -webkit-box-pack: start;
+                -ms-flex-pack: start;
+                justify-content: flex-start
+            }
+
+            .navbar-expand-lg .navbar-nav {
+                -webkit-box-orient: horizontal;
+                -webkit-box-direction: normal;
+                -ms-flex-direction: row;
+                flex-direction: row
+            }
+
+            .navbar-expand-lg .navbar-nav .nav-link {
+                padding-right: 0.5rem;
+                padding-left: 0.5rem
+            }
+
+            .navbar-expand-lg .navbar-collapse {
+                display: -webkit-box !important;
+                display: -ms-flexbox !important;
+                display: flex !important;
+                -ms-flex-preferred-size: auto;
+                flex-basis: auto
+            }
+
+            .navbar-expand-lg .navbar-toggler {
+                display: none
+            }
+        }
+
+        .navbar-dark .navbar-brand {
+            color: #fff
+        }
+
+        .navbar-dark .navbar-brand:hover,
+        .navbar-dark .navbar-brand:focus {
+            color: #fff
+        }
+
+        .navbar-dark .navbar-nav .nav-link {
+            color: #fff
+        }
+
+        .navbar-dark .navbar-nav .nav-link:hover,
+        .navbar-dark .navbar-nav .nav-link:focus {
+            color: #00bc8c
+        }
+
+        .navbar-dark .navbar-toggler {
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.1)
+        }
+
+        .navbar-dark .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E")
+        }
+
+        @-webkit-keyframes progress-bar-stripes {
+            from {
+                background-position: 0.625rem 0
+            }
+
+            to {
+                background-position: 0 0
+            }
+        }
+
+        .bg-primary {
+            background-color: #375a7f !important
+        }
+
+        .mr-auto {
+            margin-right: auto !important
+        }
+
+        @media print {
+
+            *,
+            *::before,
+            *::after {
+                text-shadow: none !important;
+                -webkit-box-shadow: none !important;
+                box-shadow: none !important
+            }
+
+            a:not(.btn) {
+                text-decoration: underline
+            }
+
+            p,
+            h2 {
+                orphans: 3;
+                widows: 3
+            }
+
+            h2 {
+                page-break-after: avoid
+            }
+
+            @page {
+                size: a3
+            }
+
+            body {
+                min-width: 992px !important
+            }
+
+            .container {
+                min-width: 992px !important
+            }
+
+            .navbar {
+                display: none
+            }
+        }
+    </style>
+    <link rel="stylesheet" id="bootstrapThemeCss" href="https://www.nguyenda.com/tools/json/js/bootstrap.dark.min.css"
+        media="print" onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="assets/css/bootstrap.dark.min.css">
+    </noscript>
+    <style>
+        @-webkit-keyframes fa-beat {
+
+            0%,
+            90% {
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+
+            45% {
+                -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+                transform: scale(var(--fa-beat-scale, 1.25))
+            }
+        }
+
+        @-webkit-keyframes fa-bounce {
+            0% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+
+            10% {
+                -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, .9)) translateY(0);
+                transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, .9)) translateY(0)
+            }
+
+            30% {
+                -webkit-transform: scale(var(--fa-bounce-jump-scale-x, .9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -.5em));
+                transform: scale(var(--fa-bounce-jump-scale-x, .9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -.5em))
+            }
+
+            50% {
+                -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, .95)) translateY(0);
+                transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, .95)) translateY(0)
+            }
+
+            57% {
+                -webkit-transform: scale(1) translateY(var(--fa-bounce-rebound, -.125em));
+                transform: scale(1) translateY(var(--fa-bounce-rebound, -.125em))
+            }
+
+            64% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+
+            to {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+        }
+
+        @-webkit-keyframes fa-fade {
+            50% {
+                opacity: var(--fa-fade-opacity, .4)
+            }
+        }
+
+        @-webkit-keyframes fa-beat-fade {
+
+            0%,
+            to {
+                opacity: var(--fa-beat-fade-opacity, .4);
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 1;
+                -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+                transform: scale(var(--fa-beat-fade-scale, 1.125))
+            }
+        }
+
+        @-webkit-keyframes fa-flip {
+            50% {
+                -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+                transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg))
+            }
+        }
+
+        @-webkit-keyframes fa-shake {
+            0% {
+                -webkit-transform: rotate(-15deg);
+                transform: rotate(-15deg)
+            }
+
+            4% {
+                -webkit-transform: rotate(15deg);
+                transform: rotate(15deg)
+            }
+
+            8%,
+            24% {
+                -webkit-transform: rotate(-18deg);
+                transform: rotate(-18deg)
+            }
+
+            12%,
+            28% {
+                -webkit-transform: rotate(18deg);
+                transform: rotate(18deg)
+            }
+
+            16% {
+                -webkit-transform: rotate(-22deg);
+                transform: rotate(-22deg)
+            }
+
+            20% {
+                -webkit-transform: rotate(22deg);
+                transform: rotate(22deg)
+            }
+
+            32% {
+                -webkit-transform: rotate(-12deg);
+                transform: rotate(-12deg)
+            }
+
+            36% {
+                -webkit-transform: rotate(12deg);
+                transform: rotate(12deg)
+            }
+
+            40%,
+            to {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+        }
+
+        @-webkit-keyframes fa-spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+
+            to {
+                -webkit-transform: rotate(1turn);
+                transform: rotate(1turn)
+            }
+        }
+
+        :root {
+            --fa-style-family-brands: "Font Awesome 6 Brands";
+            --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Brands";
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-brands-400.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-brands-400.ttf) format("truetype")
+        }
+
+        :root {
+            --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-regular-400.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-regular-400.ttf) format("truetype")
+        }
+
+        :root {
+            --fa-style-family-classic: "Font Awesome 6 Free";
+            --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 900;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-solid-900.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-solid-900.ttf) format("truetype")
+        }
+    </style>
+    <style>
+        .fa {
+            font-family: var(--fa-style-family, "Font Awesome 6 Free");
+            font-weight: var(--fa-style, 900)
+        }
+
+        .fa,
+        .fas {
+            -moz-osx-font-smoothing: grayscale;
+            -webkit-font-smoothing: antialiased;
+            display: var(--fa-display, inline-block);
+            font-style: normal;
+            font-variant: normal;
+            line-height: 1;
+            text-rendering: auto
+        }
+
+        .fas {
+            font-family: "Font Awesome 6 Free"
+        }
+
+        @-webkit-keyframes fa-beat {
+
+            0%,
+            90% {
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+
+            45% {
+                -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+                transform: scale(var(--fa-beat-scale, 1.25))
+            }
+        }
+
+        @-webkit-keyframes fa-bounce {
+            0% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+
+            10% {
+                -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, .9)) translateY(0);
+                transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, .9)) translateY(0)
+            }
+
+            30% {
+                -webkit-transform: scale(var(--fa-bounce-jump-scale-x, .9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -.5em));
+                transform: scale(var(--fa-bounce-jump-scale-x, .9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -.5em))
+            }
+
+            50% {
+                -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, .95)) translateY(0);
+                transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, .95)) translateY(0)
+            }
+
+            57% {
+                -webkit-transform: scale(1) translateY(var(--fa-bounce-rebound, -.125em));
+                transform: scale(1) translateY(var(--fa-bounce-rebound, -.125em))
+            }
+
+            64% {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+
+            to {
+                -webkit-transform: scale(1) translateY(0);
+                transform: scale(1) translateY(0)
+            }
+        }
+
+        @-webkit-keyframes fa-fade {
+            50% {
+                opacity: var(--fa-fade-opacity, .4)
+            }
+        }
+
+        @-webkit-keyframes fa-beat-fade {
+
+            0%,
+            to {
+                opacity: var(--fa-beat-fade-opacity, .4);
+                -webkit-transform: scale(1);
+                transform: scale(1)
+            }
+
+            50% {
+                opacity: 1;
+                -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+                transform: scale(var(--fa-beat-fade-scale, 1.125))
+            }
+        }
+
+        @-webkit-keyframes fa-flip {
+            50% {
+                -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+                transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg))
+            }
+        }
+
+        @-webkit-keyframes fa-shake {
+            0% {
+                -webkit-transform: rotate(-15deg);
+                transform: rotate(-15deg)
+            }
+
+            4% {
+                -webkit-transform: rotate(15deg);
+                transform: rotate(15deg)
+            }
+
+            8%,
+            24% {
+                -webkit-transform: rotate(-18deg);
+                transform: rotate(-18deg)
+            }
+
+            12%,
+            28% {
+                -webkit-transform: rotate(18deg);
+                transform: rotate(18deg)
+            }
+
+            16% {
+                -webkit-transform: rotate(-22deg);
+                transform: rotate(-22deg)
+            }
+
+            20% {
+                -webkit-transform: rotate(22deg);
+                transform: rotate(22deg)
+            }
+
+            32% {
+                -webkit-transform: rotate(-12deg);
+                transform: rotate(-12deg)
+            }
+
+            36% {
+                -webkit-transform: rotate(12deg);
+                transform: rotate(12deg)
+            }
+
+            40%,
+            to {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+        }
+
+        @-webkit-keyframes fa-spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+                transform: rotate(0deg)
+            }
+
+            to {
+                -webkit-transform: rotate(1turn);
+                transform: rotate(1turn)
+            }
+        }
+
+        .fa-external-link-alt:before {
+            content: "\f35d"
+        }
+
+        .fa-th:before {
+            content: "\f00a"
+        }
+
+        .fa-expand:before {
+            content: "\f065"
+        }
+
+        :root {
+            --fa-style-family-brands: "Font Awesome 6 Brands";
+            --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Brands";
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-brands-400.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-brands-400.ttf) format("truetype")
+        }
+
+        :root {
+            --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Free"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 400;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-regular-400.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-regular-400.ttf) format("truetype")
+        }
+
+        :root {
+            --fa-style-family-classic: "Font Awesome 6 Free";
+            --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Free"
+        }
+
+        @font-face {
+            font-family: "Font Awesome 6 Free";
+            font-style: normal;
+            font-weight: 900;
+            font-display: block;
+            src: url(https://www.nguyenda.com/tools/json/font/fa-solid-900.woff2) format("woff2"), url(https://www.nguyenda.com/tools/json/font/fa-solid-900.ttf) format("truetype")
+        }
+
+        .fas {
+            font-weight: 900
+        }
+    </style>
+    <link rel="stylesheet" href="https://www.nguyenda.com/tools/json/js/fontawesome.css" media="print"
+        onload="this.media='all'">
+    <noscript>
+        <link rel="stylesheet" href="https://www.nguyenda.com/tools/json/js/fontawesome.css">
+    </noscript>
+    <link rel="stylesheet" href="https://www.nguyenda.com/tools/json/js/styles.css?v=1">
+    <script>
+        var ace = null;
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/ace.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/theme-idle_fingers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/mode-json.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.31.1/theme-dawn.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ClientJS/0.2.1/client.min.js"></script>
+
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
+    <style>
+        nav {
+            height: 42px
+        }
+
+        .page-desc {
+            margin-top: 100px;
+            margin-bottom: 50px;
+            border: 1px dotted silver;
+            font-family: Source Sans Pro, Helvetica, Arial, sans-serif;
+            text-align: center;
+            border-radius: 20px
+        }
+
+        .page-desc .sub-container {
+            padding: 24px
+        }
+
+        .page-desc .sub-container .text-h1 {
+            font-size: 30px;
+            line-height: 36px;
+            font-weight: 600
+        }
+
+        .page-desc .sub-container .text-h2 {
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: lighter
+        }
+
+        .page-desc .sub-container .keyword-content {
+            margin: 40px 0 20px
+        }
+
+        .link-container a {
+            margin-left: 10px
+        }
+
+        .p-button.p-button-icon-only.p-button-rounded {
+            height: 35px !important
+        }
+
+        .p-button.p-button-icon-only {
+            width: 35px !important
+        }
+    </style>
+    <link rel="stylesheet" href="https://www.nguyenda.com/tools/json/js/styles.6b0d09783f627c0c.css" media="print"
+        onload="this.media='all'"><noscript>
+        <link rel="stylesheet" href="https://www.nguyenda.com/tools/json/js/styles.6b0d09783f627c0c.css">
+    </noscript>
+    <style ng-transition="serverApp">
+        .json-grid-editor-container[_ngcontent-sc16] {
+            height: calc(100vh - 46px);
+            width: 100%
+        }
+
+        .p-dialog .p-dialog-header {
+            background: #ffffff !important;
+            color: #495057 !important
+        }
+
+        .p-dialog .p-dialog-footer {
+            background: #ffffff !important;
+            color: #495057 !important
+        }
+
+        .share-json-content[_ngcontent-sc16] {
+            padding: 20px;
+            width: 100%
+        }
+
+        .share-json-content[_ngcontent-sc16] span[_ngcontent-sc16] {
+            font-weight: 500;
+            margin-bottom: 10px
+        }
+
+        .share-json-url-input[_ngcontent-sc16] {
+            width: 100%;
+            height: 37px;
+            margin-right: 5px;
+            margin-bottom: 10px
+        }
+    </style>
+    <style ng-transition="serverApp">
+        .theme-view[_ngcontent-sc14] {
+            height: 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            width: 88px
+        }
+
+        .functions-container[_ngcontent-sc14] {
+            margin-right: 20px
+        }
+
+        .login-buttons[_ngcontent-sc14] {
+            margin-left: 20px;
+            margin-right: 10px
+        }
+
+        .social-plugins[_ngcontent-sc14] {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            padding: 5px;
+            border-radius: 10px;
+            height: 50px
+        }
+
+        iframe[_ngcontent-sc14] {
+            height: 620px;
+            width: 100%;
+            border: none
+        }
+
+        .nav-link[_ngcontent-sc14] {
+            color: #c6c6c6 !important
+        }
+
+        .new-link[_ngcontent-sc14] {
+            color: #fff !important
+        }
+
+        .logo[_ngcontent-sc14] {
+            font-size: 21px;
+            color: #82d3ff
+        }
+
+        .logo[_ngcontent-sc14] .logo-text[_ngcontent-sc14] {
+            font-weight: 700;
+            color: #82d3ff
+        }
+
+        .logo[_ngcontent-sc14] .logo-text-color2[_ngcontent-sc14] {
+            color: #fbfbfb
+        }
+    </style>
+    <style ng-transition="serverApp">
+        .p-dialog-mask {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            pointer-events: none
+        }
+
+        .p-dialog-mask.p-component-overlay {
+            pointer-events: auto
+        }
+
+        .p-dialog {
+            display: flex;
+            flex-direction: column;
+            pointer-events: auto;
+            max-height: 90%;
+            transform: scale(1);
+            position: relative
+        }
+
+        .p-dialog-content {
+            overflow-y: auto;
+            flex-grow: 1
+        }
+
+        .p-dialog-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-shrink: 0
+        }
+
+        .p-dialog-draggable .p-dialog-header {
+            cursor: move
+        }
+
+        .p-dialog-footer {
+            flex-shrink: 0
+        }
+
+        .p-dialog .p-dialog-header-icons {
+            display: flex;
+            align-items: center
+        }
+
+        .p-dialog .p-dialog-header-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative
+        }
+
+        .p-fluid .p-dialog-footer .p-button {
+            width: auto
+        }
+
+        .p-dialog-top .p-dialog,
+        .p-dialog-bottom .p-dialog,
+        .p-dialog-left .p-dialog,
+        .p-dialog-right .p-dialog,
+        .p-dialog-top-left .p-dialog,
+        .p-dialog-top-right .p-dialog,
+        .p-dialog-bottom-left .p-dialog,
+        .p-dialog-bottom-right .p-dialog {
+            margin: .75rem;
+            transform: translateZ(0)
+        }
+
+        .p-dialog-maximized {
+            transition: none;
+            transform: none;
+            width: 100vw !important;
+            height: 100vh !important;
+            top: 0 !important;
+            left: 0 !important;
+            max-height: 100%;
+            height: 100%
+        }
+
+        .p-dialog-maximized .p-dialog-content {
+            flex-grow: 1
+        }
+
+        .p-dialog-left {
+            justify-content: flex-start
+        }
+
+        .p-dialog-right {
+            justify-content: flex-end
+        }
+
+        .p-dialog-top {
+            align-items: flex-start
+        }
+
+        .p-dialog-top-left {
+            justify-content: flex-start;
+            align-items: flex-start
+        }
+
+        .p-dialog-top-right {
+            justify-content: flex-end;
+            align-items: flex-start
+        }
+
+        .p-dialog-bottom {
+            align-items: flex-end
+        }
+
+        .p-dialog-bottom-left {
+            justify-content: flex-start;
+            align-items: flex-end
+        }
+
+        .p-dialog-bottom-right {
+            justify-content: flex-end;
+            align-items: flex-end
+        }
+
+        .p-dialog .p-resizable-handle {
+            position: absolute;
+            font-size: .1px;
+            display: block;
+            cursor: se-resize;
+            width: 12px;
+            height: 12px;
+            right: 1px;
+            bottom: 1px
+        }
+
+        .p-confirm-dialog .p-dialog-content {
+            display: flex;
+            align-items: center
+        }
+    </style>
+    <style ng-transition="serverApp">
+        .p-toast {
+            position: fixed;
+            width: 25rem
+        }
+
+        .p-toast-message {
+            overflow: hidden
+        }
+
+        .p-toast-message-content {
+            display: flex;
+            align-items: flex-start
+        }
+
+        .p-toast-message-text {
+            flex: 1 1 auto
+        }
+
+        .p-toast-top-right {
+            top: 20px;
+            right: 20px
+        }
+
+        .p-toast-top-left {
+            top: 20px;
+            left: 20px
+        }
+
+        .p-toast-bottom-left {
+            bottom: 20px;
+            left: 20px
+        }
+
+        .p-toast-bottom-right {
+            bottom: 20px;
+            right: 20px
+        }
+
+        .p-toast-top-center {
+            top: 20px;
+            left: 50%;
+            transform: translate(-50%)
+        }
+
+        .p-toast-bottom-center {
+            bottom: 20px;
+            left: 50%;
+            transform: translate(-50%)
+        }
+
+        .p-toast-center {
+            left: 50%;
+            top: 50%;
+            min-width: 20vw;
+            transform: translate(-50%, -50%)
+        }
+
+        .p-toast-icon-close {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative
+        }
+
+        .p-toast-icon-close.p-link {
+            cursor: pointer
+        }
+    </style>
+</head>
+
+<body>
+    <app-root _nghost-sc16="" ng-version="15.2.10" ng-server-context="ssg"><app-header _ngcontent-sc16=""
+            _nghost-sc14="">
+            <nav _ngcontent-sc14="" class="navbar navbar-expand-lg navbar-dark bg-primary"><a _ngcontent-sc14=""
+                    href="/" class="navbar-brand">
+                    <div _ngcontent-sc14="" class="logo"><i _ngcontent-sc14="" class="fa fa-th"></i>&nbsp;<span
+                            _ngcontent-sc14="" class="logo-text logo-text-color2">JSON</span><span _ngcontent-sc14=""
+                            class="logo-text">Tools</span></div>
+                </a><button _ngcontent-sc14="" type="button" data-toggle="collapse" data-target="#navbarColor01"
+                    aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation"
+                    class="navbar-toggler"><span _ngcontent-sc14="" class="navbar-toggler-icon"></span></button>
+                <div _ngcontent-sc14="" id="navbarColor01" class="collapse navbar-collapse">
+
+                  
+                    <div _ngcontent-sc14="" class="theme-view"><p-button _ngcontent-sc14=""
+                            styleclass="p-button-rounded p-button-info p-button-sm" class="p-element"><button pripple=""
+                                class="p-ripple p-element p-button-rounded p-button-info p-button-sm p-button p-component p-button-icon-only"
+                                type="button"><!----><span aria-hidden="true"
+                                    class="pi pi-moon p-button-icon ng-star-inserted"></span><!----><!----><!----></button></p-button><p-button
+                            _ngcontent-sc14="" styleclass="p-button-rounded p-button-info p-button-sm"
+                            class="p-element"><button pripple=""
+                                class="p-ripple p-element p-button-rounded p-button-info p-button-sm p-button p-component p-button-icon-only"
+                                type="button"><!----><span aria-hidden="true"
+                                    class="fa fa-expand p-button-icon ng-star-inserted"></span><!----><!----><!----></button></p-button>
+                    </div>
+                    
+                </div>
+            </nav><p-dialog _ngcontent-sc14="" header="Welcome" class="p-element ng-tns-c11-2"><!----></p-dialog>
+        </app-header>
+        <div _ngcontent-sc16="" class="json-grid-editor-container"><json-grid-editor _ngcontent-sc16=""
+                id="jsonGridEditor"></json-grid-editor></div><router-outlet
+            _ngcontent-sc16=""></router-outlet><app-content-all-in-one _nghost-sc1="" class="ng-star-inserted">
+            <div _ngcontent-sc1="" class="container page-desc">
+                <div _ngcontent-sc1="" class="sub-container">
+                    <h1 _ngcontent-sc1="" class="text-h1"> JSONGrid - All-in-One Json Solution Online </h1>
+                    <h2 _ngcontent-sc1="" class="text-h2"> We make Json easy for you! </h2>
+                    <div _ngcontent-sc1="" class="container keyword-content">
+                        <div _ngcontent-sc1="" class="row"></div>
+                    </div>
+                    <div _ngcontent-sc1="" class="link-container"><a _ngcontent-sc1="" href="/" role="button"
+                            class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;All-in-One</a><a _ngcontent-sc1=""
+                            href="/json-grid" role="button" class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;Json Grid</a><a _ngcontent-sc1=""
+                            href="/json-formatter" role="button" class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;Json Formatter</a><a _ngcontent-sc1=""
+                            href="/json-validator" role="button" class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;Json Validator</a><a _ngcontent-sc1=""
+                            href="/json-viewer" role="button" class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;Json Viewer</a><a _ngcontent-sc1=""
+                            href="/json-parser" role="button" class="btn btn-primary"><i _ngcontent-sc1=""
+                                class="fas fa-external-link-alt"></i>&nbsp;Json Parser</a></div>
+                </div>
+            </div>
+        </app-content-all-in-one><!----><app-footer _ngcontent-sc16="" _nghost-sc15="">
+            <div _ngcontent-sc15="" class="container">
+                <p _ngcontent-sc15="">Copyright © 2024 JsonGrid. All rights reserved.</p>
+            </div>
+        </app-footer><p-dialog _ngcontent-sc16="" class="p-element ng-tns-c11-0"><!----></p-dialog><p-toast
+            _ngcontent-sc16="" class="p-element ng-tns-c13-1">
+            <div class="ng-tns-c13-1 p-toast p-component p-toast-center"><!----></div>
+        </p-toast>
+    </app-root>
+    <script src="https://www.nguyenda.com/tools/json/js/runtime.cae6f6a21d43be96.js" type="module"></script>
+    <script src="https://www.nguyenda.com/tools/json/js/polyfills.1d259f5b562c1347.js" type="module"></script>
+    <script src="https://www.nguyenda.com/tools/json/js/main.548de21ee8a66a40.js" type="module"></script>
+
+    <script src="https://www.nguyenda.com/tools/json/js/main.js?v=1" type="module"></script>
+</body>
+
+</html>
