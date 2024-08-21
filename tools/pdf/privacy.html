@@ -7,14 +7,33 @@ header-mask: 0.6
 nonav:		true
 ---
 
+
+<!-- Page Header -->
+<header class="intro-header" style="background-image: url('{{ site.baseurl }}/{% if page.header-img %}{{ page.header-img }}{% else %}{{ site.header-img }}{% endif %}')">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+                <div class="site-heading" id="tag-heading">
+                    <h1>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</h1>
+                    <span class="subheading">{{ page.description }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+
 <!-- Main Content -->
 <div class="en post-container">
 	<div class="row">
 		<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
 
-		<strong>Privacy Policy</strong>
+		
+		<img src="app_store_icon.png">
 
-		<img src="https://lh3.googleusercontent.com/UMvviRCWqy22Bdx5j6Pb5gHNw3FDTAcOa-LzwlNzL9spktHKKTwpeyO-USlfvQeLyC4" alt="Ảnh nổi bật">
+		<p></p>
+
+		<strong>Privacy Policy</strong>
 
 		<p>This privacy policy applies to the NoAD PDF app (hereby referred to as "Application") for mobile devices that
 			was
