@@ -14,8 +14,6 @@ tags:
 
 >Trong bài viết này, chúng ta sẽ khám phá giải pháp kiến ​​trúc mạnh mẽ cho thách thức này: kiến ​​trúc module hoặc có thể cấu hình trong phát triển di động, lấy cảm hứng từ kiến ​​trúc microservice của các nền tảng Backend.
 
-![]()
-
 # Kiến trúc module là gì?
 Tương tự như microservices, chúng ta phân tách một ứng dụng lớn thành các thư viện di động tập trung nhỏ, mỗi thư viện giải quyết một mảng nghiệp vụ hoặc chức năng cụ thể. Kiến trúc module này cho phép xây dựng nhiều ứng dụng bằng các thành phần có thể tái sử dụng này, đảm bảo rằng mỗi module vẫn được kết nối lỏng lẻo. Điều này tối đa hóa tính linh hoạt, khả năng kiểm tra và khả năng tương thích cho từng thành phần.
 
