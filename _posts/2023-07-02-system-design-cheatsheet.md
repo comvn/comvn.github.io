@@ -10,4 +10,4 @@ tags:
     - System
 ---
 
-![](https://www.nguyenda.com/img/it/systemdesign.png)
+![](https://www.nguyenda.com/img/it/systemsdesign.png)
